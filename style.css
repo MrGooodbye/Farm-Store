@@ -9,36 +9,55 @@
 .header{
     min-height: 100vh;
     width:100%;
-    background-image: linear-gradient(rgba(4,9,30,0.7),rgba(4,9,30,0.7)),url(images/nongsan.jpg);
+    background-image: linear-gradient(rgba(4,9,30,0.7),rgba(4,9,30,0.7)),url(images/index.jpg);
     background-position: center;
-    background-size: cover;
-    position: relative;
+    background-size: cover;    
 }
+
 /*Thanh menu*/
 nav{
+    width: 100%;
     display: flex;
-    padding: 2% 6%;
+    padding: 0.2% 15.3%;
     justify-content: space-between;
     align-items: center;
+    transition: all 0.7s ease;
 }
-nav img{
-    width: 150px;    
+
+nav.sticky{
+    background: LightSkyBlue;
+    position: fixed;
+    height: 9vh;
+    /*Thuộc tính giúp thanh menu không bị ảnh hưởng bởi function php*/
+    z-index: 999;
 }
+
+nav.sticky ul li a{
+    color: black;
+}
+
+nav.sticky:focus-within{
+    display: block;
+}
+
 .nav-links{
     flex: 1;
     text-align: right;
+    position: sticky;
+    top: 0;
 }
 .nav-links ul li {
     list-style: none;
     display: inline-block;
-    padding: 8px 12px;
+    padding: 8px 20px;
     position: relative;
 }
 /*Tạo kích thước, màu chữ cho thanh menu*/
 .nav-links ul li a{
-    color: #fff;
+    color: DeepSkyBlue;
+    font-weight:bold;
     text-decoration: none;
-    font-size: 13px;
+    font-size: 13.5px;
 }
 /*Tạo viền gạch chân cho thanh menu*/
 .nav-links ul li::after{
@@ -57,11 +76,11 @@ nav img{
 
 /*Phần giới thiệu dẫn liên kết */
 .text-box{
-    width: 90%;
+    width: 80%;
     color: #fff;
     position: absolute;
     top: 50%;
-    left: 50%;
+    left: 49%;
     transform: translate(-50%,-50%);
     text-align: center;
 }
@@ -143,6 +162,7 @@ p{
     font-weight: 300;
     line-height: 22px;
     padding: 10px;
+    
 }
 .course-col a{
     text-decoration: none;
@@ -324,6 +344,7 @@ h3{
     font-size: 14px;
     padding: 60px 0 20px;
     text-align: center;
+    width: 100%;
 }
 .footer p{
     color: #8a8a8a;
@@ -378,6 +399,7 @@ ul{
     margin: auto;
     padding-left: 25px;
     padding-right: 25px;
+    
 }
 .small-container1{
     color: #fff;
@@ -404,9 +426,9 @@ ul{
 }
 .title{
     text-align: center;
-    margin: 0 auto 80px;
+    margin: 0 auto 25px;
     position: relative;
-    line-height: 60px;
+    line-height: 50px;
     color: #555;
 }
 .title::after{
@@ -518,7 +540,7 @@ select:focus{
     margin-top: 20px;
 }
 .single-product input{
-    width: 50px;
+    width: 65px;
     height: 40px;
     padding-left: 10px;
     font-size: 20px;
@@ -708,7 +730,7 @@ th{
     text-align: left;
     padding: 5px;
     color: #fff;
-    background: #ff523b;
+    background: #f44336;
     font-weight: normal;
 }
 td{
@@ -755,7 +777,7 @@ th:last-child{
     border: 1px solid #ff523b; /*màu khung viền*/
     padding: 12px 34px;
     font-size: 13px;
-    background: #ff523b;
+    background: #f44336;
     position: relative;
     cursor: pointer;
 }
@@ -777,12 +799,10 @@ th:last-child{
 .alert{
     color: #fff;
     font-size: 24px;
-
 }
 
 .successs{
     color: green;
     font-size: 18px;
 }
-
 

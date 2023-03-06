@@ -2,10 +2,7 @@
 	$filepath = realpath(dirname(__FILE__));
 	include_once ($filepath."/../lib/database.php");
 	include_once ($filepath."/../helper/format.php");
-
-
 ?>
-
 
 <?php
 	class category
@@ -20,26 +17,38 @@
 			$this->fm = new Format();
 		}
 		
-		public function insert_category($catName)
+		public function insert_category($data)
 		{	
-			$catName = $this->fm->validation($catName);
-			$catName = mysqli_real_escape_string($this->db->link, $catName);
-			
+			// $catName = $this->fm->validation($catName);
+			$catName = mysqli_real_escape_string($this->db->link, $data['catName']);
+
+			$check_cat = "SELECT * FROM tbl_category WHERE catName = '$catName' LIMIT 1";
+			$result_check = $this->db->select($check_cat);
 
 			if(empty($catName)){
-				$alert = "<span class='error'>Tên Danh Mục Sản Phẩm không được để trống</span>";
+				$alert = "<span class='error'>Tên Danh Mục Sản Phẩm không được để trống!</span>";
 				return $alert;
-			} else {
+			}
+
+			elseif($result_check)
+			{
+				$alert = '<span class="error">Loại Sản Phẩm này đã được thêm vào. Vui lòng kiểm tra lại!</span';
+				return $alert;
+			}
+
+			else 
+			{
 				$query = "INSERT INTO tbl_category(catName) VALUES('$catName')";
 				$result = $this->db->insert($query);
-
-				if($result){
-					
-					$alert = '<span class="success">Bạn đã thêm '  .$catName. '</span>' . '<span class="success"> vào Danh Mục Sản Phẩm Thành Công </span>';
-					
-					return $alert;
-				}else{
-					$alert = '<span class="error">Thêm '  .$catName. '</span>' . '<span class="error"> vào Danh Mục Sản Phẩm Thất Bại </span>';
+				if($result)
+				{
+					echo '<script>alert("Bạn đã thêm thành công vào danh mục sản phẩm! ")</script>';
+					echo '<script>window.location = "addsp.php"</script>';
+				}
+				else
+				{
+					echo '<script>alert("Thêm thất bại vào danh mục sản phẩm! ")</script>';
+					echo '<script>window.location = "addsp.php"</script>';
 				}
 			}
 		}
@@ -71,12 +80,11 @@
 				$result = $this->db->update($query);
 
 				if($result){
-					
-					$alert = '<span class="success">Bạn đã sửa thành công loại sản phẩm '  .$catName. '</span>' . '<span class="success"> từ Danh Mục Loại Sản Phẩm</span>';					
-					return $alert;
+					echo '<script>alert("Bạn đã sửa thành công loại sản phẩm ' . $catName .'! ")</script>';
+					echo '<script>window.location = "listloaisp.php"</script>';
 				}else{
-					$alert = '<span class="error">Bạn đã sửa thất bại loại sản phẩm '  .$catName. '</span>' . '<span class="error"> từ Danh Mục Loại Sản Phẩm</span>';
-					return $alert;
+					echo '<script>alert("Bạn đã sửa thất bại loại sản phẩm ' . $catName .'! ")</script>';
+					echo '<script>window.location = "listloaisp.php"</script>';
 				}
 			}
 		}
@@ -86,17 +94,31 @@
 			$result = $this->db->delete($query);
 			if($result){
 					
-					$alert = '<span class="success">Bạn đã xoá Thành Công loại sản phẩm này</span>';					
-					return $alert;
+				echo '<script>alert("Bạn đã xoá thành công loại sản phẩm này! ")</script>';
+				echo '<script>window.location = "listloaisp.php"</script>';
 				}else{
-					$alert = '<span class="error">Bạn đã xóa Thất Bại loại sản phẩm này </span>';
-					return $alert;
+					echo '<script>alert("Bạn đã xoá thất bại loại sản phẩm này! ")</script>';
+				echo '<script>window.location = "listloaisp.php"</script>';
 				}
 			}
 
 		public function show_category_fontend()
 		{
 			$query = "SELECT * FROM tbl_category order by catId desc";
+			$result = $this->db->select($query);
+			return $result;
+		}
+
+		public function show_category_notselected($id)
+		{
+			$query = "SELECT * FROM tbl_category WHERE catId != $id";
+			$result = $this->db->select($query);
+			return $result;
+		}
+
+		public function show_1category($id)
+		{
+			$query = "SELECT * FROM tbl_category WHERE catId = $id";
 			$result = $this->db->select($query);
 			return $result;
 		}
@@ -126,5 +148,4 @@
 		}
 	}
 ?>
-
 

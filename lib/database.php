@@ -14,8 +14,8 @@ Class Database{
    public $dbname = DB_NAME;
  
  
-   public $link;
-   public $error;
+  //  public $link;
+  //  public $error;
  
  public function __construct(){
   $this->connectDB();

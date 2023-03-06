@@ -1,7 +1,23 @@
 <?php include "inc/header.php"; ?>
 
+<?php 
+    if(isset($_SESSION['code_cart'])) 
+    {
+        sleep(2);
+        unset($_SESSION['code_cart']);
+        // echo $_SESSION['code_cart'];
+    }
+
+    elseif(!isset($_SESSION['code_cart']))
+    {
+        // echo '<script>window.location = "404.php"</script>';
+        // echo 'khong co';
+    }
+?>
+
 
 <section class="header">
+<a name="main"></a>
       <nav>
         </nav>  
     <!--CART ITEMS DETAIL-->

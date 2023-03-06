@@ -159,6 +159,15 @@
                 </tr>
                 <tr>
                     <td>
+                        <label>Số Lượng Đang Bán</label>
+                    </td>
+                    <td>
+                    <input type="text" value = "<?php echo $result_product['solg_from_storage'] ?>"name="quantity" class="medium" />
+                        <div id="messagequantity"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
                         <label>Ảnh Sản Phẩm</label>
                     </td>
                     <td>

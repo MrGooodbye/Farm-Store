@@ -1,266 +1,274 @@
-
-
 <?php
-
     include "inc/header.php";
+    include "../classes/thongke.php";
+    require "../carbon/autoload.php";
+    use Carbon\Carbon;
+	use Carbon\CarbonInterval;
+    $thongke = new thongke();
 ?>
+<body>
+<?php 
+    $now = Carbon::now('Asia/Ho_Chi_Minh');
+    $nowformat = $now->isoFormat('DD/MM/YYYY');
+?>
+
 
 
             <!--Main-->
             <main class="bg-white-300 flex-1 p-3 overflow-hidden">
-                <center><B>CHÀO MỪNG BẠN ĐẾN VỚI TRANG CHỦ ADMIN</B></center>
-            </br>
-                <div class="flex flex-col">
-                    <!-- Stats Row Starts Here -->
-                    <div class="flex flex-1 flex-col md:flex-row lg:flex-row mx-2">
-                        <div class="shadow-lg bg-red-vibrant border-l-8 hover:bg-red-vibrant-dark border-red-vibrant-dark mb-2 p-2 md:w-1/4 mx-2">
-                            <div class="p-4 flex flex-col">
-                                <a href="#" class="no-underline text-white text-2xl">
-                                    $244
-                                </a>
-                                <a href="#" class="no-underline text-white text-lg">
-                                    Total Sales
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="shadow bg-info border-l-8 hover:bg-info-dark border-info-dark mb-2 p-2 md:w-1/4 mx-2">
-                            <div class="p-4 flex flex-col">
-                                <a href="#" class="no-underline text-white text-2xl">
-                                    $199.4
-                                </a>
-                                <a href="#" class="no-underline text-white text-lg">
-                                    Total Cost
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="shadow bg-warning border-l-8 hover:bg-warning-dark border-warning-dark mb-2 p-2 md:w-1/4 mx-2">
-                            <div class="p-4 flex flex-col">
-                                <a href="#" class="no-underline text-white text-2xl">
-                                    900
-                                </a>
-                                <a href="#" class="no-underline text-white text-lg">
-                                    Total Users
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="shadow bg-success border-l-8 hover:bg-success-dark border-success-dark mb-2 p-2 md:w-1/4 mx-2">
-                            <div class="p-4 flex flex-col">
-                                <a href="#" class="no-underline text-white text-2xl">
-                                    500
-                                </a>
-                                <a href="#" class="no-underline text-white text-lg">
-                                    Total Products
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- /Stats Row Ends Here -->
-
-                    <!-- Card Sextion Starts Here -->
-                    <div class="flex flex-1 flex-col md:flex-row lg:flex-row mx-2">
-
-                        <!-- card -->
-
-                        <div class="rounded overflow-hidden shadow bg-white mx-2 w-full">
-                            <div class="px-6 py-2 border-b border-light-grey">
-                                <div class="font-bold text-xl">Trending Categories</div>
-                            </div>
-                            <div class="table-responsive">
-                                <table class="table text-grey-darkest">
-                                    <thead class="bg-grey-dark text-white text-normal">
-                                    <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">Item</th>
-                                        <th scope="col">Last</th>
-                                        <th scope="col">Current</th>
-                                        <th scope="col">Change</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td>
-                                            <button class="bg-blue-500 hover:bg-blue-800 text-white font-light py-1 px-2 rounded-full">
-                                                Twitter
-                                            </button>
-                                        </td>
-                                        <td>4500</td>
-                                        <td>4600</td>
-                                        <td>
-                                            <span class="text-green-500"><i class="fas fa-arrow-up"></i>5%</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">2</th>
-                                        <td>
-                                            <button class="bg-primary hover:bg-primary-dark text-white font-light py-1 px-2 rounded-full">
-                                                Facebook
-                                            </button>
-                                        </td>
-                                        <td>10000</td>
-                                        <td>3000</td>
-                                        <td>
-                                            <span class="text-red-500"><i class="fas fa-arrow-down"></i>65%</span>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <th scope="row">3</th>
-                                        <td>
-                                            <button class="bg-success hover:bg-success-dark text-white font-light py-1 px-2 rounded-full">
-                                                Amazon
-                                            </button>
-                                        </td>
-                                        <td>10000</td>
-                                        <td>3000</td>
-                                        <td>
-                                            <span class="text-red-500"><i class="fas fa-arrow-down"></i>65%</span>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <th scope="row">4</th>
-                                        <td>
-                                            <button class="bg-blue-500 hover:bg-blue-800 text-white font-light py-1 px-2 rounded-full">
-                                                Microsoft
-                                            </button>
-                                        </td>
-                                        <td>10000</td>
-                                        <td>3000</td>
-                                        <td>
-                                            <span class="text-green-500"><i class="fas fa-arrow-up"></i>65%</span>
-                                        </td>
-                                    </tr>
-
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <!-- /card -->
-
-                    </div>
-                    <!-- /Cards Section Ends Here -->
-
-                    <!-- Progress Bar -->
-                    <div class="flex flex-1 flex-col md:flex-row lg:flex-row mx-2 mt-2">
-                        <div class="rounded overflow-hidden shadow bg-white mx-2 w-full pt-2">
-                            <div class="px-6 py-2 border-b border-light-grey">
-                                <div class="font-bold text-xl">Progress Among Projects</div>
-                            </div>
-                            <div class="">
-                                <div class="w-full">
-
-                                    <div class="shadow w-full bg-grey-light">
-                                        <div class="bg-blue-500 text-xs leading-none py-1 text-center text-white"
-                                             style="width: 45%">45%
-                                        </div>
+                <div>
+                <br>
+                <center><B>CHÀO MỪNG BẠN ĐẾN VỚI TRANG CHỦ ADMIN - CỬA HÀNG TRANG THIẾT BỊ PC ROSÉ</B></center>
+                <br>
+                <center><B>Chúc bạn một ngày tốt lành!</B></center>
+                <br>
+                <center><B>DƯỚI ĐÂY LÀ THỐNG KÊ CHO NGÀY HÔM NAY - <?php echo $nowformat ?> </B></center>
+                
+                <!-- <img src="../images/nongsan.jpg" width="" height="0"> -->
+                </br>
+                <?php 
+                            $get_thongke_homnay = $thongke->get_thongke_homnay($nowformat);
+                            if($get_thongke_homnay ) 
+                            {
+                                while ($result = $get_thongke_homnay->fetch_assoc())
+                                {    
+                                    $tongsodonhang_homnay = $result['tong_sodonhang'];
+                                    $tongsoluongban_homnay = $result['tong_soluongban'];
+                                    $tongdoanhthu_homnay = $result['tong_doanhthu'];
+                                }                     
+                ?>
+                                <div class="flex flex-1 flex-col md:flex-row lg:flex-row mx-2">
+                                    <div class="shadow-lg bg-red-vibrant border-l-8 hover:bg-red-vibrant-dark border-red-vibrant-dark mb-2 p-2 md:w-1/4 mx-2">
+                                    <div class="p-4 flex flex-col">
+                                    <a href="index.php?getdonhanghomnay=<?php echo $nowformat ?>" onclick="click()"class="no-underline text-white text-lg">Tổng Số Đơn Hàng
+                                    <div class="no-underline text-white text-2xl">
+                                        <?php echo $tongsodonhang_homnay; ?>
+                                    </div>
+                                    </a>
+                                    </div>
                                     </div>
 
-
-                                    <div class="shadow w-full bg-grey-light mt-2">
-                                        <div class="bg-teal-500 text-xs leading-none py-1 text-center text-white"
-                                             style="width: 55%">55%
-                                        </div>
+                                    <div class="shadow bg-success border-l-8 hover:bg-success-dark border-success-dark mb-2 p-2 md:w-1/4 mx-2">
+                                    <div class="p-4 flex flex-col">
+                                    <a href="#" class="no-underline text-white text-2xl">Tổng Doanh Thu</a>
+                                    <a href="#" class="no-underline text-white text-2xl">
+                                    <?php echo $fm->format_currency($tongdoanhthu_homnay)."VNĐ";?>
+                                    </a>
+                                    </div>
                                     </div>
 
-
-                                    <div class="shadow w-full bg-grey-light mt-2">
-                                        <div class="bg-orange-500 text-xs leading-none py-1 text-center text-white"
-                                             style="width: 65%">65%
-                                        </div>
+                                    <div class="shadow bg-info border-l-8 hover:bg-info-dark border-info-dark mb-2 p-2 md:w-1/4 mx-2">
+                                    <div class="p-3 flex flex-col">
+                                    <a href="#" class="no-underline text-white text-2xl">Tổng Số Lượng Đã Bán</a>
+                                    <a href="#" class="no-underline text-white text-2xl">
+                                    <?php echo $fm->format_currency($tongsoluongban_homnay);?>             
+                                    </a>
                                     </div>
-
-
-                                    <div class="shadow w-full bg-grey-300 mt-2">
-                                        <div class="bg-red-800 text-xs leading-none py-1 text-center text-white"
-                                             style="width: 75%">75%
-                                        </div>
+                                    </div>
+<?php
+                                    $get_thongke_sanpham_homnay = $thongke->get_thongke_sanpham_homnay($nowformat);
+                                    if($get_thongke_sanpham_homnay)
+                                    {
+                                        while($row = mysqli_fetch_assoc($get_thongke_sanpham_homnay))
+                                        {
+                                            $tensp_banchaynhat = $row['productName'];
+                                            $soluong_sp_banchaynhat = $row['quantity'];
+                                        }
+                                    }
+?>                                    
+                                    <div class="shadow bg-warning border-l-8 hover:bg-warning-dark border-warning-dark mb-2 p-2 md:w-1/4 mx-2">
+                                    <div class="p-4 flex flex-col">
+                                    <a href="#" class="no-underline text-white text-2xl">Bán Chạy Nhất</a>
+                                    <a href="#" class="no-underline text-white text-lg">
+                                    <?php echo $tensp_banchaynhat?>
+                                    <br>
+                                    <?php echo 'Số lượng bán ra: '.$soluong_sp_banchaynhat?>
+                                    </a>
+                                    </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!--Profile Tabs-->
-                    <div class="flex flex-1 flex-col md:flex-row lg:flex-row mx-2 p-1 mt-2 mx-auto lg:mx-2 md:mx-2 justify-between">
-                        <!--Top user 1-->
-                        <div class="rounded rounded-t-lg overflow-hidden shadow max-w-xs my-3">
-                            <img src="https://i.imgur.com/w1Bdydo.jpg" alt="" class="w-full"/>
-                            <div class="flex justify-center -mt-8">
-                                <img src="https://i.imgur.com/8Km9tLL.jpg" alt=""
-                                     class="rounded-full border-solid border-white border-2 -mt-3">
-                            </div>
-                            <div class="text-center px-3 pb-6 pt-2">
-                                <h3 class="text-black text-sm bold font-sans">Olivia Dunham</h3>
-                                <p class="mt-2 font-sans font-light text-grey-700">Hello, i'm from another the other
-                                    side!</p>
-                            </div>
-                            <div class="flex justify-center pb-3 text-grey-dark">
-                                <div class="text-center mr-3 border-r pr-3">
-                                    <h2>34</h2>
-                                    <span>Photos</span>
-                                </div>
-                                <div class="text-center">
-                                    <h2>42</h2>
-                                    <span>Friends</span>
-                                </div>
-                            </div>
-                        </div>
-                        <!--Top user 2-->
-                        <div class="rounded rounded-t-lg overflow-hidden shadow max-w-xs my-3">
-                            <img src="https://i.imgur.com/w1Bdydo.jpg" alt="" class="w-full"/>
-                            <div class="flex justify-center -mt-8">
-                                <img src="https://i.imgur.com/8Km9tLL.jpg" alt=""
-                                     class="rounded-full border-solid border-white border-2 -mt-3">
-                            </div>
-                            <div class="text-center px-3 pb-6 pt-2">
-                                <h3 class="text-black text-sm bold font-sans">Olivia Dunham</h3>
-                                <p class="mt-2 font-sans font-light text-grey-dark">Hello, i'm from another the other
-                                    side!</p>
-                            </div>
-                            <div class="flex justify-center pb-3 text-grey-dark">
-                                <div class="text-center mr-3 border-r pr-3">
-                                    <h2>34</h2>
-                                    <span>Photos</span>
-                                </div>
-                                <div class="text-center">
-                                    <h2>42</h2>
-                                    <span>Friends</span>
-                                </div>
-                            </div>
-                        </div>
-                        <!--Top user 3-->
-                        <div class="rounded rounded-t-lg overflow-hidden shadow max-w-xs my-3">
-                            <img src="https://i.imgur.com/w1Bdydo.jpg" alt="" class="w-full"/>
-                            <div class="flex justify-center -mt-8">
-                                <img src="https://i.imgur.com/8Km9tLL.jpg" alt=""
-                                     class="rounded-full border-solid border-white border-2 -mt-3">
-                            </div>
-                            <div class="text-center px-3 pb-6 pt-2">
-                                <h3 class="text-black text-sm bold font-sans">Olivia Dunham</h3>
-                                <p class="mt-2 font-sans font-light text-grey-dark">Hello, i'm from another the other
-                                    side!</p>
-                            </div>
-                            <div class="flex justify-center pb-3 text-grey-dark">
-                                <div class="text-center mr-3 border-r pr-3">
-                                    <h2>34</h2>
-                                    <span>Photos</span>
-                                </div>
-                                <div class="text-center">
-                                    <h2>42</h2>
-                                    <span>Friends</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!--/Profile Tabs-->
+                                <br>
+                                <br>
+                                <br>
+                    <div id="myfirstchart" style="height: 250px;"></div>
                 </div>
-            </main>
-            <!--/Main-->
-        </div>
+<?php 
+                            }
+                            else
+                            {
+                                echo "<br><br><br><br><br><center><h2 style='color:red;'><B>OOPS! CỬA HÀNG CỦA BẠN HÔM NAY HIỆN CHƯA CÓ ĐƠN HÀNG NÀO ĐỂ THỐNG KÊ CẢ! :( </B></h2></center>";
+                            }
+?>                
+</body>
+<?php 
+  if(isset($_GET['getdonhanghomnay']))
+  {
+    $getdon_homnay = $_GET['getdonhanghomnay'];
+    $show_order_details = $thongke->get_confirm_today($getdon_homnay);
+?>
+       
+        <div class="popup" id="popup1"> 
+        <a href="index.php"><i class="fa-sharp fa-solid fa-circle-xmark fa-2x" id="fa"></i></a>
+        <h4><center>Đơn Hàng Đã Xác Nhận Trong Hôm Nay <?php echo $nowformat ?></center></h4>
+        <hr>
+          <table id="details">
+            <tr>
+              <th><B>Tên Sản Phẩm</B></th>
+              <th><B>Số Lượng</B></th>
+              <th><B>Tổng Giá Tiền</B></th>
+              <th><B>Hình Ảnh</B></th>
+              <th><B>Thời Gian Mua</B></th>
+              <th><B>Loại Thanh Toán</B></th>
+              <th><B>Trạng Thái</B></th>
+              <th><B>Người Nhận</B></th>
+              <th><B>Số Điện Thoại</B></th>
+              <th><B>Địa Chỉ Nhận</B></th>
+              <th><B>Ngày Xác Nhận Đơn</B></th>
+            </tr>
+<?php                        
+    if($show_order_details)
+    {
+      while($result_show = $show_order_details->fetch_assoc())
+      {
+?>        
+        <tr>
+          <td><?php echo $result_show['productName']?></td>
+          <td><?php echo $result_show['quantity']?></td>
+          <td><?php echo $fm->format_currency($result_show['price'])." VNĐ"?></td>
+          <td><img src ="uploads/<?php echo $result_show['image'] ?>" width="100"></img></td>
+          <td><?php echo $result_show['paid_date']?></td>
+          <td><?php echo $result_show['paid_type']?></td>
+          <td>
+        <?php 
+                if($result_show['status']==0)
+                {
+                ?>
+                <B>Đang chờ xử lý...</B>
+                <?php
+                }
+                elseif($result_show['status']==1){
+                ?>
+                <B>Đã được xử lý</B>
+                <?php
+                }
+                else
+                {
+                ?>
+                <B>Giao hàng</B>
+                <?php
+                }
+        ?>
+        </td>
+          <td><?php echo $result_show['hotenkhach']?></td>
+          <td><?php echo $result_show['sdt']?></td>
+          <td id="diachi"><?php echo $result_show['diachi']?></td>
+          <td id="diachi"><?php echo $result_show['confirm_date']?></td>
+        </tr>
+<?php      
+      }
+    }
+  }
+  else{
+  }
+?>
+</table>
+</div>
+<style>
+ 
+.popup{
+  width: 95%;
+  height: 530px;
+  margin-top: 130px;
+  background-color: #fff;
+  position: absolute;
+  z-index: 10000;
+  margin-left: 45px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: none;
+  border-radius: 22px;
+}
 
+.td img{
+    width: 10px;
+    background-color: red;
+}
+
+.popup h4{
+  color: red;
+  font-size: 18px;
+  margin-bottom: 15px;
+  margin-top: -4px;
+}
+
+.popup hr{
+    padding-bottom: 5px;
+}
+
+#fa{
+  margin-left: 98.1%;
+  cursor: pointer;
+}
+
+#details th{
+  padding-top: 10px;
+  padding-right: 12px;
+  text-align: center;
+  background-color: #0000;
+  color: black;
+}
+
+#details td{
+  text-align: center;
+}
+
+#popup1{
+  -webkit-box-shadow:  0px 0px 0px 9999px rgba(0, 0, 0, 0.5);
+  box-shadow:  0px 0px 0px 9999px rgba(0, 0, 0, 0.5);
+}
+
+</style>            
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+
+<script>
+$(document).ready(function()
+{
+    $.ajax({
+        url: "../classes/action.php",
+        type: "POST",
+        data: { today: ""},
+        success: function(data)
+        {
+            // alert(data);
+            // console.log(data);
+            Morris.Bar
+            ({
+                element: 'myfirstchart',
+                data: JSON.parse(data),
+                xkey: 'ten_sp',
+                ykeys: ['gia_sp','soluong_sp'],
+                labels: ['Tổng Giá Đã Bán','Tổng Số lượng Đã Bán'],
+                //lables là label của input
+                //ykeys là value trong input của label
+
+                stacked: true
+            });
+        },
+        error: function(jqXHR, textStatus, errorThrown, data)
+        {
+            alert(jqXHR.status);
+        }
+    });
+});
+</script>
+            
 
 

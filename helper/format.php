@@ -33,5 +33,29 @@ class Format{
     }
     return $title = ucfirst($title);
    }//kiểm tra tên server
+
+   public function format_currency($n=0){
+      $n=(string)$n;
+      $n=strrev($n);
+      $res='';
+      for($i = 0; $i<strlen($n);$i++){
+         if($i%3==0 && $i != 0){
+            $res.='.';
+         }
+         $res.=$n[$i];
+      }
+      $res = strrev($res);
+      return $res;
+   }
+
+   function RemoveSpecialCharSpace($str) {
+ 
+      // Using str_replace() function
+      // to replace the word
+      $name = trim($str);
+      $str = str_replace(' ', '-', $name);
+      return preg_replace('/[^A-Za-z0-9\-]/', '', $str);
+      // Returning the result
+      }
 }
 ?>

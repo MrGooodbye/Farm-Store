@@ -1,15 +1,6 @@
 <?php include "inc/header.php"; ?>
 
 
-<?php    
- 
-  if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) 
-  {
-      
-      $insertcustomer = $cs->insert_customer($_POST); //dùng $_FILES để chèn thêm hình ảnh
-  }
-?>
-
 
 <style>body{  
     font-family: Calibri, Helvetica, sans-serif;  
@@ -22,7 +13,7 @@
   }  
     
   input[type=text], input[type=password], textarea {  
-    width: 100%;  
+    width: 70%;  
     padding: 15px;  
     margin: 5px 0 22px 0;  
     display: inline-block;  
@@ -41,12 +32,16 @@
   .registerbtn {  
     background-color: #4CAF50;  
     color: white;  
-    padding: 16px 20px;  
-    margin: 8px 0;  
-    border: none;  
+    padding: 10px 0px 10px 0px;  
+    margin: 0 auto;
+    border: none;
+    border-radius: 15px;  
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    
     cursor: pointer;  
-    width: 102%;  
-    opacity: 0.9;  
+    width: 20%;  
   }  
   .registerbtn:hover {  
     opacity: 1;  
@@ -62,7 +57,7 @@
 </head>  
 <body>
 
-<form action="" method="post">
+<form action="<?php echo $_SERVER['PHP_SELF'] ?>#dangky" method="post">
 	<br>
 	<br>
 	<br>
@@ -70,6 +65,19 @@
 
   <div class="container">  
   <center>  <h1>ĐĂNG KÝ TÀI KHOẢN</h1>  </center>
+
+
+  
+<?php    
+  if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) 
+  {
+    $insertcustomer = $cs->insert_customer($_POST); 
+  }
+?>
+
+
+
+
   <?php 
 
 if(isset($insertcustomer)){
@@ -78,14 +86,31 @@ if(isset($insertcustomer)){
 
 ?>
   <hr>  
-<label> Tên Người Dùng: </label>   
-<input type="text" name="username" placeholder= "Tên Người Dùng" size="15"/>   
-<label> Tên Tài Khoản: </label>    
-<input type="text" name="useracc" placeholder="Tên Tài Khoản" size="15"/>  
-<label> Mật Khẩu: </label>    
-<input type="password" name="userpass" placeholder="Mật Khẩu" size="15"/>    
-<input type = "submit" name = "submit" value="Đăng Ký Tài Khoản" class="registerbtn">
+<center><label> Tên Người Dùng: </label> 
+<input type="text" name="username" placeholder= "Tên Người Dùng" size="15" id="dangky" autofocus/>  </center>   
+<center><label> Tên Tài Khoản: </label>   
+<input type="text" name="useracc" placeholder="Tên Tài Khoản" size="15"  />  </center> 
+<center><label> Mật Khẩu: </label>    
+<input type="password" name="userpass" placeholder="Mật Khẩu" size="15" id = "t1" />
+<i class="far fa-eye" id="togglePassword" style="margin-left: -30px; cursor: pointer;"></i></center>
+<input type = "submit" name = "submit" id = "logButton" value="Đăng Ký Tài Khoản" onclick="registration()" class="registerbtn">
+<a href="dangnhap.php#dangnhap" class="registerbtn">Đăng Nhập</a>
+
 </form>  
 </body>  
 </html>  
+
+<script>
+   const togglePassword = document.querySelector('#togglePassword');
+  const password = document.querySelector('#t1');
+
+  togglePassword.addEventListener('click', function (e) {
+    // toggle the type attribute
+    const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+    password.setAttribute('type', type);
+    // toggle the eye slash icon
+    this.classList.toggle('fa-eye-slash');
+});
+</script>
+
 

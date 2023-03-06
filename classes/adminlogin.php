@@ -7,10 +7,6 @@
 	
 ?>
 
-
-
-
-
 <?php
 	class adminlogin
 	{
@@ -32,10 +28,12 @@
 			$adminUser = mysqli_real_escape_string($this->db->link, $adminUser);
 			$adminPass = mysqli_real_escape_string($this->db->link, $adminPass);
 
-			if(empty($adminUser) || empty($adminPass)){
-				$alert = '<span class= "error"><center>Vui lòng nhập Tên Tài Khoản và Mật Khẩu.</center></span>';
+			if($adminUser==NULL || $adminPass== NULL){
+				$alert = '<span class= "error"><center>Vui lòng nhập Tên Tài Khoản hoặc Mật Khẩu.</center></span>';
 				return $alert;
-			} else {
+			}
+
+			else {
 				$query = "SELECT * FROM tbl_admin WHERE adminUser = '$adminUser' AND adminPass = '$adminPass' LIMIT 1";
 				$result = $this->db->select($query);
 
@@ -45,6 +43,7 @@
 					Session::set('adminid', $value['adminid']);
 					Session::set('adminUser', $value['adminUser']);
 					Session::set('adminName', $value['adminName']);
+					Session::set('adminLevel', $value['level']);
 					header('Location:index.php');
 
 				}else{
@@ -56,6 +55,7 @@
 	}
 
 ?>
+
 
 
 <style>.error {color: red;}</style>

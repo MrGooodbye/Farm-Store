@@ -11,6 +11,7 @@
       $adminPass = md5($_POST['adminPass']);
       $login_check = $class->login_admin($adminUser,$adminPass);
   }
+
 ?>
 
 </br>
@@ -120,7 +121,7 @@ if(isset($login_check))
     <input type="password" placeholder="Nhập Mật Khẩu Admin" name="adminPass" >
         <style>.container .input {color:  red;}</style>
       </br>
-    <button type="submit">Đăng Nhập </button> </center>
+    <button type="submit" name="submit">Đăng Nhập </button> </center>
     <center><button type="button" class="cancelbtn">Hủy</button></center>
   </div>
 

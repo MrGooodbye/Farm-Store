@@ -29,8 +29,9 @@ class Session{
 
  public static function checkSession(){
     self::init();
-    if (self::get("adminlogin")== false) {
-     self::destroy();
+    if (self::get("adminlogin")== false) 
+    {
+     unset($_SESSION['adminlogin']);
      header("Location:login.php"); 
     }
  }
@@ -42,8 +43,8 @@ class Session{
     }
  }
 
- public static function destroy(){
-  session_destroy();
+ public static function unset(){
+   unset($_SESSION['adminlogin']);
   header("Location:login.php");
  }
 }

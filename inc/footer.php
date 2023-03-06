@@ -5,15 +5,13 @@
     <div class="container">
         <div class="row1">
             <div class="footer-col-1">
-                <h3>Download Our App</h3>
-                <p>Download App for Android and ios mobile phone.</p>
                 <div class="app-logo">
                     <img src="images/appstore.png">
                     <img src="images/chplay3.png">
                 </div>
             </div>
             <div class="footer-col-2">
-                 <img src="images/logo4.png">
+                 <img src="images/logo.png">
                  <p>Hân hạnh được phục vụ quý khách.<br>Sự hài lòng của quý khách là niềm vinh hạnh cho cửa hàng chúng tôi.</p>
             </div>
             <div class="footer-col-3">
@@ -25,18 +23,9 @@
                     <li>Bảo hành sản phẩm</li>
                 </ul>
             </div>
-            <div class="footer-col-4">
-                <h3>Follow Us</h3>
-                <ul>
-                    <li>Facebook</li>
-                    <li>Twitter</li>
-                    <li>Instagram</li>
-                    <li>Youtube</li>
-                </ul>
-            </div>
         </div>
         <hr>
-        <p class="copyright">Copyright 2021 - Trần Anh Kiệt</p>
+        <p class="copyright">Cửa Hàng Trang Thiết Bị PC ROSÉ</p>
     </div>
 </div>
 </div>

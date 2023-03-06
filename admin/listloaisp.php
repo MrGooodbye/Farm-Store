@@ -1,12 +1,15 @@
+
+ <?php
+
+include "inc/header.php";
+?>
+
+
 <?php
 
    include "../classes/category.php";
 ?>
 
- <?php
-
-    include "inc/header.php";
-?>
 
 <link rel="stylesheet" type="text/css" href="css/layout.css" />
 
