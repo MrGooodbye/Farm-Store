@@ -121,7 +121,7 @@
   border-radius: 20px;
   overflow:hidden;
   height:1%;
-  margin-right: 50px;
+  margin-right: -184px;
   
 }
 
@@ -243,15 +243,27 @@ span.price {
           <p><B><span class="a" name="tensanpham"><?php echo $result['productName'] ?> </span></B> <span class="price" name="soluong"> Số Lượng: <?php echo $result ['quantity'] ?> </span> 
 
           <span class="price" name="tongtien1mon"><?php   
-                            $total = $result['price'] * $result['quantity']; 
-                            echo $fm->format_currency($total)." "."VNĐ";   
+                           
+                           $total = 0;
+                           $giaKM = 0;
+                            if($result['sale'] == 0)
+                            {
+                              $total = $result['price'] * $result['quantity']; 
+                              echo $fm->format_currency($total)." "."VNĐ";  
+                            }
+                            else
+                            {
+                              $giagoc = $result['price'];
+                              $giatriKM = $result['sale'];
+                              $giaKM =  ($giagoc - ($giagoc * $giatriKM / 100)) * $result['quantity'];	
+                              echo $fm->format_currency($giaKM)." "."VNĐ";  
+                            }
                         ?>     
           </span> </p>
           </p>
 
-
           <?php 
-                        $subtotal += $total;
+                        $subtotal += $total + $giaKM;
                         }
                       }
 

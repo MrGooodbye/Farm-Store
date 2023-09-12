@@ -1,10 +1,6 @@
-<link rel="stylesheet" type="text/css" href="css/text.css" media="screen" />
-    
-<link rel="stylesheet" type="text/css" href="css/layout.css" />
-
-
-<?php include "../classes/category.php"; ?>
 <?php include "inc/header.php"; ?>
+<?php include "../classes/category.php"; ?>
+
 
 <?php
     $cat = new category();
@@ -85,9 +81,8 @@
                 </div>
             </div>
         </div>
-
-
-
+    
+    <link rel="stylesheet" type="text/css" href="css/layout.css" />
 
 
 

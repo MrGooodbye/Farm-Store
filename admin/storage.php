@@ -19,7 +19,7 @@
                                     border-right: 1px solid #b3b3b3;
                                     border-left: 1px solid #b3b3b3;
                                     border-top: 1px solid #b3b3b3;
-                                    padding-right: 50px;
+                                   
                                 }</style>
 
 <style>table.form label {padding-right: 20px} </style>
@@ -150,7 +150,7 @@
                     <td></td>
                     <td>
                          </br>
-                        <input type="submit" name="submit" Value="Thêm Sản Phẩm" />
+                        <input type="submit" name="submit" Value="Nhập Sản Phẩm" />
                     </td>
                 </tr>
             </table>

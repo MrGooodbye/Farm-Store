@@ -109,9 +109,10 @@
        
         <div class="popup" id="popup1"> 
         <a href="index.php"><i class="fa-sharp fa-solid fa-circle-xmark fa-2x" id="fa"></i></a>
-        <h4><center>Đơn Hàng Đã Xác Nhận Trong Hôm Nay <?php echo $nowformat ?></center></h4>
+        <h4 style="padding-top:10px;"><center>Đơn Đã Giao Trong Hôm Nay - <?php echo $nowformat ?></center></h4>
         <hr>
           <table id="details">
+          <thead>
             <tr>
               <th><B>Tên Sản Phẩm</B></th>
               <th><B>Số Lượng</B></th>
@@ -123,19 +124,21 @@
               <th><B>Người Nhận</B></th>
               <th><B>Số Điện Thoại</B></th>
               <th><B>Địa Chỉ Nhận</B></th>
-              <th><B>Ngày Xác Nhận Đơn</B></th>
+              <th><B>Ngày Giao Hàng</B></th>
             </tr>
+          </thead>
 <?php                        
     if($show_order_details)
     {
       while($result_show = $show_order_details->fetch_assoc())
       {
 ?>        
+        <tbody>
         <tr>
           <td><?php echo $result_show['productName']?></td>
           <td><?php echo $result_show['quantity']?></td>
           <td><?php echo $fm->format_currency($result_show['price'])." VNĐ"?></td>
-          <td><img src ="uploads/<?php echo $result_show['image'] ?>" width="100"></img></td>
+          <td><img src ="uploads/xuatkho/<?php echo $result_show['image'] ?>" width="100"></img></td>
           <td><?php echo $result_show['paid_date']?></td>
           <td><?php echo $result_show['paid_type']?></td>
           <td>
@@ -158,12 +161,13 @@
                 <?php
                 }
         ?>
-        </td>
+          </td>
           <td><?php echo $result_show['hotenkhach']?></td>
           <td><?php echo $result_show['sdt']?></td>
           <td id="diachi"><?php echo $result_show['diachi']?></td>
           <td id="diachi"><?php echo $result_show['confirm_date']?></td>
         </tr>
+        </tbody>
 <?php      
       }
     }
@@ -171,6 +175,7 @@
   else{
   }
 ?>
+
 </table>
 </div>
 <style>
@@ -189,6 +194,7 @@
   bottom: 0;
   border: none;
   border-radius: 22px;
+  padding: 0px 15px 0px 15px;
 }
 
 .td img{
@@ -208,8 +214,9 @@
 }
 
 #fa{
-  margin-left: 98.1%;
-  cursor: pointer;
+  left: 1480px;
+  position: fixed;
+  top: 112px;
 }
 
 #details th{
@@ -227,6 +234,7 @@
 #popup1{
   -webkit-box-shadow:  0px 0px 0px 9999px rgba(0, 0, 0, 0.5);
   box-shadow:  0px 0px 0px 9999px rgba(0, 0, 0, 0.5);
+  overflow: auto;
 }
 
 </style>            
@@ -237,6 +245,10 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script> 
+<link href="https://cdn.datatables.net/v/dt/dt-1.13.4/datatables.min.css" rel="stylesheet"/>
+<script src="https://cdn.datatables.net/v/dt/dt-1.13.4/datatables.min.js"></script>
 
 <script>
 $(document).ready(function()
@@ -271,4 +283,27 @@ $(document).ready(function()
 </script>
             
 
-
+<script>
+ $(document).ready(function () 
+ {
+    //việt hoá ngôn ngữ
+    $('#details').DataTable({
+        "language": {
+        "lengthMenu": "Hiển thị _MENU_ Sản Phẩm",
+        "info": "Tổng Sản Phẩm là _TOTAL_",
+        "search": "Tìm Sản Phẩm: ",
+        "paginate": 
+        {
+            "first":      "Đầu",
+            "last":       "Cuối",
+            "next":       "Tiếp",
+            "previous":   "Lùi"
+        },
+        "zeroRecords":    "Không tìm thấy Sản Phẩm này",
+        "infoEmpty":      "Tìm thấy 0 Sản Phẩm",
+        "infoFiltered":   "(được lọc từ tổng số _MAX_ Sản Phẩm trong danh sách)",
+        },
+    })
+    //gán biến table cho table id example để lấy data
+ })
+</script>

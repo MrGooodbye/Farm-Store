@@ -48,18 +48,18 @@ class thongke
 
                         $tong_soluong_ban = $row['quantity'];
                         $tong_gia_ban = $row['price'];
-
-                        $tong_sodon_update = $tong_sodonhang + 1;
-                        $tong_soluong_update = $tong_soluongban + $tong_soluong_ban;
-                        $tong_doanhthu_update = $tong_doanhthu + $tong_gia_ban;
-
-                        $query_update = "UPDATE tbl_thongke_doanhthu SET tong_sodonhang = ' $tong_sodon_update', tong_soluongban = '$tong_soluong_update', tong_doanhthu = '$tong_doanhthu_update' WHERE ngay_ban = '$nowformat'";
-                        $result_update = $this->db->update($query_update);
                     }
+                    
+                    $tong_sodon_update = $tong_sodonhang + 1;
+                    $tong_soluong_update = $tong_soluongban + $tong_soluong_ban;
+                    $tong_doanhthu_update = $tong_doanhthu + $tong_gia_ban;
+
+                    $query_update = "UPDATE tbl_thongke_doanhthu SET tong_sodonhang = ' $tong_sodon_update', tong_soluongban = '$tong_soluong_update', tong_doanhthu = '$tong_doanhthu_update' WHERE ngay_ban = '$nowformat'";
+                    $result_update = $this->db->update($query_update);
 
                     //kết thúc thống kê doanh thu
 
-                    $query_select_thongke_sanpham = "SELECT tbl_thongke_sanpham.price, tbl_thongke_sanpham.quantity FROM tbl_thongke_sanpham WHERE productId = '$productId'";
+                    $query_select_thongke_sanpham = "SELECT tbl_thongke_sanpham.price, tbl_thongke_sanpham.quantity FROM tbl_thongke_sanpham WHERE productId = '$productId' AND ngay_ban = '$nowformat'";
                     $result_select_thongke_sanpham = $this->db->select($query_select_thongke_sanpham);
 
                     if($result_select_thongke_sanpham)
@@ -73,13 +73,14 @@ class thongke
                         $tonggia_thongke_moi = $tonggia_thongke_hientai + $tong_gia_ban;
                         $tongsoluong_thongke_moi = $tongsoluong_thongke_hientai + $tong_soluong_ban;
 
-                        $query_update_sanpham_thongke = "UPDATE tbl_thongke_sanpham SET price = '$tonggia_thongke_moi', quantity = '$tongsoluong_thongke_moi' WHERE productId = '$productId'";
+                        $query_update_sanpham_thongke = "UPDATE tbl_thongke_sanpham SET price = '$tonggia_thongke_moi', quantity = '$tongsoluong_thongke_moi' WHERE productId = '$productId' AND ngay_ban = '$nowformat'";
                         $result_query_update_sanpham_thongke = $this->db->update($query_update_sanpham_thongke);
                     }
 
                     else
                     {
-                        $query_insert_thongke_sanpham = "INSERT INTO tbl_thongke_sanpham(ngay_ban, productId, productName, price, quantity) VALUES ('$nowformat', '$productId', '$productName', '$tong_gia_ban', '$tong_soluong_ban')";
+                        $query_insert_thongke_sanpham = "INSERT INTO tbl_thongke_sanpham(ngay_ban, productId, productName, price, quantity) 
+                        VALUES ('$nowformat', '$productId', '$productName', '$tong_gia_ban', '$tong_soluong_ban')";
                         $result_query_insert_thongke_sanpham = $this->db->insert($query_insert_thongke_sanpham);
                     }
                 }
@@ -102,11 +103,19 @@ class thongke
                     $tong_soluong_ban = $row['quantity'];
                     $tong_gia_ban = $row['price'];
 
-                    $insert_thongke_doanhthu_homnay = "INSERT INTO tbl_thongke_doanhthu(ngay_ban, tong_sodonhang, tong_soluongban, tong_doanhthu) VALUES ('$nowformat', '$tongso_donhang', '$tong_soluong_ban', '$tong_gia_ban')";
-                    $result_insert = $this->db->insert($insert_thongke_doanhthu_homnay);
+                    $disable_key = "SET FOREIGN_KEY_CHECKS = 0";
+            	    $result_disable = $this->db->insert($disable_key);
+                    if($result_disable)
+                    {
+                        $insert_thongke_doanhthu_homnay = "INSERT INTO tbl_thongke_doanhthu(ngay_ban, tong_sodonhang, tong_soluongban, tong_doanhthu) VALUES ('$nowformat', '$tongso_donhang', '$tong_soluong_ban', '$tong_gia_ban')";
+                        $result_insert = $this->db->insert($insert_thongke_doanhthu_homnay);
 
-                    $insert_thongke_sanpham_homnay  = "INSERT INTO tbl_thongke_sanpham(ngay_ban, productId, productName, price, quantity) VALUES ('$nowformat', '$productId', '$productName', '$tong_gia_ban', '$tong_soluong_ban')";
-                    $result_insert_thongke_sanpham = $this->db->insert($insert_thongke_sanpham_homnay);
+                        $insert_thongke_sanpham_homnay  = "INSERT INTO tbl_thongke_sanpham(ngay_ban, productId, productName, price, quantity) VALUES ('$nowformat', '$productId', '$productName', '$tong_gia_ban', '$tong_soluong_ban')";
+                        $result_insert_thongke_sanpham = $this->db->insert($insert_thongke_sanpham_homnay);
+
+                        $enable_key = "SET FOREIGN_KEY_CHECKS = 1";
+                        $result_enable = $this->db->insert($enable_key);
+                    }
                 }
             }
             else{}
@@ -171,7 +180,7 @@ class thongke
                     $tongsoluong_thongke_moi = $tongsoluong_thongke_hientai + $tong_soluong_ban;
 
                     $query_update_sanpham_thongke = "UPDATE tbl_thongke_sanpham SET price = '$tonggia_thongke_moi', quantity = '$tongsoluong_thongke_moi' WHERE productId = '$productId'";
-                    $result_query_update_sanpham_thongke = $this->db->update($query_update_sanpham_thongke);
+                    $result_query_update_sanpham_thongke = $this->db->update($query_update_sanpham_thongke);   
                 }
 
                 else
@@ -200,11 +209,19 @@ class thongke
                     $tong_soluong_ban = $row['quantity'];
                     $tong_gia_ban = $row['price'];
 
-                    $insert_thongke_doanhthu_homnay = "INSERT INTO tbl_thongke_doanhthu(ngay_ban, tong_sodonhang, tong_soluongban, tong_doanhthu) VALUES ('$nowformat', '$tongso_donhang', '$tong_soluong_ban', '$tong_gia_ban')";
-                    $result_insert_doanhthu = $this->db->insert($insert_thongke_doanhthu_homnay);
+                    $disable_key = "SET FOREIGN_KEY_CHECKS = 0";
+            	    $result_disable = $this->db->insert($disable_key);
+                    if($result_disable)
+                    {
+                        $insert_thongke_doanhthu_homnay = "INSERT INTO tbl_thongke_doanhthu(ngay_ban, tong_sodonhang, tong_soluongban, tong_doanhthu) VALUES ('$nowformat', '$tongso_donhang', '$tong_soluong_ban', '$tong_gia_ban')";
+                        $result_insert_doanhthu = $this->db->insert($insert_thongke_doanhthu_homnay);
 
-                    $insert_thongke_sanpham_homnay  = "INSERT INTO tbl_thongke_sanpham(ngay_ban, productId, productName, price, quantity) VALUES ('$nowformat', '$productId', '$productName', '$tong_gia_ban', '$tong_soluong_ban')";
-                    $result_insert_thongke_sanpham = $this->db->insert($insert_thongke_sanpham_homnay);
+                        $insert_thongke_sanpham_homnay  = "INSERT INTO tbl_thongke_sanpham(ngay_ban, productId, productName, price, quantity) VALUES ('$nowformat', '$productId', '$productName', '$tong_gia_ban', '$tong_soluong_ban')";
+                        $result_insert_thongke_sanpham = $this->db->insert($insert_thongke_sanpham_homnay);
+
+                        $enable_key = "SET FOREIGN_KEY_CHECKS = 1";
+                        $result_enable = $this->db->insert($enable_key);
+                    }
                 }
             }
             else{}
@@ -260,6 +277,107 @@ class thongke
         WHERE tbl_cartonline.confirm_date = '$getdon_homnay'";
         $result_select = $this->db->select($select_query);
         return $result_select;
+    }
+
+    public function thongke_doanhthu_theo_thoigian($thoi_gian)
+    {
+        $now = Carbon::now('Asia/Ho_Chi_Minh');
+        $nowformat = Carbon::now('Asia/Ho_Chi_Minh')->isoFormat('DD/MM/YYYY');
+        //$nowformat = $now->format('d/m/Y');
+        // echo $nowformat;
+        switch($thoi_gian)
+        {
+            case 7:
+                $subdays = $now->subdays(7)->isoFormat('DD/MM/YYYY');
+                break;
+            
+            case 30:
+                $subdays = $now->subdays(30)->isoFormat('DD/MM/YYYY');
+                break;
+            
+            case 90: 
+                $subdays = $now->subdays(90)->isoFormat('DD/MM/YYYY');
+                break;
+
+            case 180:
+                $subdays = $now->subdays(180)->isoFormat('DD/MM/YYYY');
+                break;
+            
+            case 365:
+                $subdays = $now->subdays(365)->isoFormat('DD/MM/YYYY');
+                break;
+        }
+        
+        $query_select = "SELECT * FROM tbl_thongke_doanhthu WHERE ngay_ban BETWEEN '$subdays' AND '$nowformat' ORDER BY ngay_ban ASC";
+        $result_select = $this->db->select($query_select);
+        if($result_select)
+        {
+            while($result = mysqli_fetch_array($result_select))
+            {
+                $result_array[] = $result;
+    
+                foreach($result_array as $result)
+                {
+                    $Date = $result['ngay_ban'];
+                    $Tong_sodonhang = $result['tong_sodonhang'];
+                    $Tong_soluongban = $result['tong_soluongban'];
+                    $Tong_doanhthu = $result['tong_doanhthu'];
+                }	
+
+                $data[] = array('ngay_ban' => $Date, 'tong_sodonhang' => $Tong_sodonhang, 'tong_soluongban' => $Tong_soluongban, 'tong_doanhthu' => $Tong_doanhthu);
+            }
+            header('Content-Type: application/json'); 
+            echo json_encode($data);
+        }
+    }
+
+    public function thongke_sanpham_theo_thoigian($thoi_gian)
+    {
+        $now = Carbon::now('Asia/Ho_Chi_Minh');
+        $nowformat = Carbon::now('Asia/Ho_Chi_Minh')->isoFormat('DD/MM/YYYY');
+        //$nowformat = $now->format('d/m/Y');
+        // echo $nowformat;
+        switch($thoi_gian)
+        {
+            case 7:
+                $subdays = $now->subdays(7)->isoFormat('DD/MM/YYYY');
+                break;
+            
+            case 30:
+                $subdays = $now->subdays(30)->isoFormat('DD/MM/YYYY');
+                break;
+            
+            case 90: 
+                $subdays = $now->subdays(90)->isoFormat('DD/MM/YYYY');
+                break;
+
+            case 180:
+                $subdays = $now->subdays(180)->isoFormat('DD/MM/YYYY');
+                break;
+            
+            case 365:
+                $subdays = $now->subdays(365)->isoFormat('DD/MM/YYYY');
+                break;
+        }
+        
+        $query_select = "SELECT * FROM tbl_thongke_sanpham WHERE ngay_ban BETWEEN '$subdays' AND '$nowformat' GROUP BY ngay_ban";
+        $result_select = $this->db->select($query_select);
+        while($result = mysqli_fetch_array($result_select))
+            {
+                $result_array[] = $result;
+    
+                foreach($result_array as $result)
+                {
+                    $Date = $result['ngay_ban'];
+                    $TenSanPham = $result['productName'];
+                    $Tong_soluongban = $result['quantity'];
+                    $Tong_doanhthu = $result['price'];
+                }	
+
+                $data[] = array('ngay_ban' => $Date, 'ten_sp' => $TenSanPham, 'tong_soluongban' => $Tong_soluongban, 'tong_doanhthu' => $Tong_doanhthu);
+            }
+            header('Content-Type: application/json'); 
+            echo json_encode($data);
     }
 }
 

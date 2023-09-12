@@ -1,7 +1,6 @@
 <?php
 	$filepath = realpath(dirname(__FILE__));
 	include_once ($filepath."/../lib/database.php");
-	include_once ($filepath."/../helper/format.php");
 ?>
 
 <?php
@@ -89,18 +88,36 @@
 			}
 		}
 
-		public function del_cat($Id){
-			$query = "DELETE FROM tbl_category WHERE catId = '$Id'";
-			$result = $this->db->delete($query);
-			if($result){
-					
-				echo '<script>alert("Bạn đã xoá thành công loại sản phẩm này! ")</script>';
-				echo '<script>window.location = "listloaisp.php"</script>';
-				}else{
-					echo '<script>alert("Bạn đã xoá thất bại loại sản phẩm này! ")</script>';
-				echo '<script>window.location = "listloaisp.php"</script>';
-				}
+		public function del_cat($Id)
+		{
+			$disable_key = "SET FOREIGN_KEY_CHECKS = 0";
+            $result_disable = $this->db->insert($disable_key);	
+			if($result_disable == true)
+			{
+				echo 1;
+				// $query = "DELETE FROM tbl_category WHERE catId = '$Id'";
+				// $result = $this->db->delete($query);
+				// if($result)
+				// {
+				// 	$enable_key = "SET FOREIGN_KEY_CHECKS = 1";
+                //     $result_enable = $this->db->insert($enable_key);
+                //     if($result_enable)
+                //     {
+                //     	echo '<script>alert("Bạn đã xoá thành công loại sản phẩm này! ")</script>';
+				// 		echo '<script>window.location = "listloaisp.php"</script>';
+                //     }		
+				// }
+				// else
+				// {
+				// 	echo '<script>alert("Bạn đã xoá thất bại loại sản phẩm này! ")</script>';
+				// 	echo '<script>window.location = "listloaisp.php"</script>';
+				// }
 			}
+			else
+			{
+				echo 2;
+			}
+		}
 
 		public function show_category_fontend()
 		{

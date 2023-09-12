@@ -83,7 +83,7 @@ span.psw {
 }
 
 /* Change styles for span and cancel button on extra small screens */
-@media screen and (max-width: 300px) {
+@media screen and (max-width: 400px) {
   span.psw {
      display: block;
      float: none;
@@ -122,12 +122,9 @@ if(isset($login_check))
         <style>.container .input {color:  red;}</style>
       </br>
     <button type="submit" name="submit">Đăng Nhập </button> </center>
-    <center><button type="button" class="cancelbtn">Hủy</button></center>
   </div>
 
-  <div class="container" style="background-color:#f1f1f1">
-      <center><a href="#">Bạn Quên Mật Khẩu?</a></center>
-  </div>
+
 </form>
 </body>
 </html>

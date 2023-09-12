@@ -1,21 +1,11 @@
-<?php 
-    include "inc/header.php"; 
-?>
-
+<?php include "inc/header.php"; ?>
 
 <?php 
-    $login_link = "dangnhap.php";
-    $login_check = Session::get('customer_login');
-    if($login_check == false)
-        {
-            echo "<script> location.replace('" . $login_link . "')  </script>";
-        }    
-
-        if(isset($_GET['Cartid']) && ($_GET['Quantity'])) {
-            $cartId = $_GET['Cartid'];
-            $quantity = $_GET['Quantity'];
-            $update_quantity_cart = $ct->update_quantity_cart($quantity, $cartId);
-        }
+    
+    if(isset($_GET['Cartid']) && ($_GET['Quantity'])) {
+      $cartId = $_GET['Cartid'];
+      $quantity = $_GET['Quantity'];
+  }
 ?>
 
 <?php 
@@ -24,18 +14,25 @@
         $cartid = $_GET['cartid']; 
         $delcart = $ct->del_product_cart($cartid);
     }
+?>
 
+<?php 
     if(isset($delcart))
     {
-        echo '<script>window.location="thanhtoanvnpay.php#dathang"</script>';
+        echo '<script>window.location="cart.php#giohangf"</script>';
     }
 ?>
 
-
-<a name = "dathang"></a>
-<div class="containe">  
+<body>
+<a name="dathang"></a>
+<div class="containe" id="container">  
+<span id="popup1" class="overlay">
+	<div class="popup">
+  Số lượng hiện tại không thể lớn hơn số lượng chúng tôi đang bán!
+	</div>
+</span>
   <div class="cart transition is-open">
-    <div class="table">
+    <div class="table" id="table">
       <div class="layout-inline row th">
         <div class="col col-pro">Sản Phẩm</div>
         <div class="col col-price align-center "> 
@@ -54,14 +51,16 @@
         ?>
 <?php 
         $get_product_cart = $ct->get_product_cart();
-        if($get_product_cart)
-        {
+        if($get_product_cart){
         $subtotal = 0;
-        while($result = mysqli_fetch_array($get_product_cart))
+        while($result = mysqli_fetch_assoc($get_product_cart))
         {
+            $cartId = $result['cartId']; 
+            $product_Id = $result['productId'];
+            $sl_hientai = $result['quantity'];
 ?>
-            <div class="layout-inline row">
-            <img src="admin/uploads/<?php echo $result['image'] ?>" alt="kitten" />
+            <div class="layout-inline row">  
+            <img src="admin/uploads/xuatkho/<?php echo $result['image'] ?>" alt="kitten" />
             <div class="col col-pro layout-inline">
             <p><?php echo $result['productName']?></p>
             </div>
@@ -69,9 +68,9 @@
             <p><?php echo $fm->format_currency($result['price'])?></p>
             </div>
             <div class="col col-qty layout-inline">
-            <a href="?Cartid=<?php echo $result['cartId'] ?>&Quantity=<?php echo $result['quantity']-1?>" class="qty qty-minus">-</a>
-                <input type="numeric" value="<?php echo $result['quantity']?>" />
-            <a href="?Cartid=<?php echo $result['cartId'] ?>&Quantity=<?php echo $result['quantity']+1?>" class="qty qty-plus">+</a>
+            <?php echo '<button class="qty qty-minus" id="minus" onclick="minus_sl('.$cartId.',\''.$sl_hientai.'\')">-</button>'; ?>
+            <?php echo '<input type="numeric" class="thay_doi" id="soluong" onclick="change_sl('.$cartId.',\''.$product_Id.'\')" value="'.$sl_hientai.'"></input>';?>
+            <?php echo '<button class="qty qty-minus" id="plusus" onclick="plus_sl('.$cartId.','.$product_Id.',\''.$sl_hientai.'\')">+</button>'; ?>
             </div>
             <div class="col col-total col-numeric">               
             <?php $total = $result['price'] * $result['quantity'];  ?>
@@ -81,9 +80,8 @@
             </div>
 <?php 
             $subtotal += $total;
+            $code_cart_online = $result['code_cart_online'];
         }
-        }
-        
 ?>  
         <hr>   
         <div class="tf">
@@ -96,38 +94,39 @@
            </div>
             </div>
         </div>        
+       
   </div>
-  </div>
-        <?php 
-
-                    $get_product_cart = $ct->get_product_cart();
-                    if($get_product_cart)
-                    {
-                        while($result = $get_product_cart->fetch_assoc())
-                        {
-                ?>
-
-                <form action ="vnpay_create_payment.php" method = "post">
-                    <input type ="hidden" name ='order_id' value = "<?php echo $result['code_cart_online']?>"> 
+  <form action ="vnpay_create_payment.php" method = "post">
+                    <input type ="hidden" name ='order_id' value = "<?php echo $code_cart_online?>"> 
                     <input type ="hidden" name ='total_price' value = "<?php echo $subtotal?>"> 
-<?php 
-                        }
-?>
-                    
+
                     <button type="submit" class='btn btn-thanhtoan' name ='redirect'>Thanh Toán VNPAY</button>
                 </form>
-                        
-<?php 
-                    }
-                    
-                    else{}
-?>
-        </div>
-<?php include 'inc/footer.php'; ?>
+ 
+</div>
+
+<?php
+        }
+        else 
+                {   
+                    echo "<br>";
+                    echo '<center><h4>Giỏ Hàng hiện tại đang trống.</h4></center>';
+                }
+        ?>
+      
+</div>
+<div>
+
+</div>
+</div>            
+</div>
+</div>
+</body>
+
+    <?php include 'inc/footer.php'; ?>
 
 
-
-<style>
+ <style>
     img {
   width: 100px;
   height: 80px;
@@ -274,15 +273,16 @@ a {
 }
 
 
-a.qty {
+button.qty {
   width: 1em;
-  line-height: 1em;
-  border-radius: 2em;
+  line-height: 42px;
+  border-radius: 20px;
   font-size: 2.5em;
   font-weight: bold;
   text-align: center;
   background: #43ace3;  
   color: #fff;
+  border: none;
 }
 
 a.qty:hover {
@@ -296,7 +296,7 @@ a.qty:hover {
   font-weight: bold;
   background: #43ace3;
   color: #fff;
-  box-shadow: 0 3px 0 rgba(59,154,198, 1);
+  box-shadow: 0 3px 0 rgba(59,154,198, 1)
 }
 
 .btn:hover {
@@ -311,10 +311,16 @@ a.qty:hover {
 .btn-thanhtoan{
   display: flex;
   justify-content: center;
+  padding-top: 15px;
+  padding-bottom: 15px;
   margin: 0 auto;
-  width: 25%;
+  width: 20%;
   border: none;
   border-radius: 15px;
+}
+
+.transition {
+  transition: all 0.3s ease-in-out;
 }
 
 @media screen and ( max-width: 755px) {
@@ -344,4 +350,171 @@ a.qty:hover {
     padding-top: 35px;
     padding-right: 30px;
 }
+
+#popup1{
+  margin: 405px auto;
+  margin-left: 800px;
+  padding: 10px;
+  background: #fff;
+  border-radius: 5px;
+  width: 30%;
+  position: absolute;
+  border: none;
+  border-radius: 15px;
+  border-style: solid;
+  float: right;
+  z-index: -999px;
+  font-size: 18px;
+  font-family: Tahoma, Arial, sans-serif;
+  background-color: #06D85F;
+  /* display: none; */
+  /* opacity: 0.5; */
+}
+
  </style>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+
+ <script>
+   $("#popup1").hide();
+  function minus_sl(id_cart, sl_hientai)
+  {
+    // alert(id_cart + ','+ sl_hientai);
+    sl_conlai = sl_hientai - 1;
+    // alert(sl_conlai);
+
+    if(sl_conlai == 0)
+    {
+      
+    } 
+    else
+    {
+      $.ajax({
+        url: 'classes/action.php',
+        type: 'POST',
+        data: {Id_Cart: id_cart, Sl_Conlai: sl_conlai},
+        success: function(data)
+        {
+          $( "#table" ).load( "http://localhost/gearmaytinh/cart.php" + " #table" );
+        },
+        error: function(xhr, statusText, error)
+        {
+          alert(xhr.status);
+        }
+      });
+    }
+  }
+
+  function change_sl(cartid, id) 
+  {
+  //  alert(cartid + ',' + id);
+   //không biết vì lý do gì đó mà dùng id của input type number không được nên phải dùng class của input type number.
+    $('.thay_doi').on("input", function() 
+    {
+      var dInput = this.value;
+      // alert(dInput);
+      // alert(cartid + ',' + id + ',' + dInput);
+      if(dInput == 0)
+      {
+        // alert("Input type number đang = 0!");
+      }
+      // else if(dInput == this.value)
+      // {
+         // alert("Input type number mới đang = giá trị cũ!");
+      // }
+      else
+      {
+        $.ajax({
+          url: 'classes/action.php',
+          type: 'POST',
+          data: {id_product: id},
+          //truyền id sản phẩm để check số lượng đang bán
+          success: function(data)
+          {
+            // alert(data);
+            //không biết lý do gì mà so sánh không được nên phải format data type
+            var parsedata = parseFloat(data);
+            var parsedInput = parseFloat(dInput);
+            if(parsedata  >= parsedInput)
+            {
+              // alert("Số lượng đang bán lớn hơn!");
+              $.ajax({
+                url: 'classes/action.php',
+                type: 'POST',
+                data: {GioHang_Id: cartid, SoLuongMoi: dInput},
+                success: function()
+                {
+                  $("#table").load("http://localhost/gearmaytinh/cart.php" + " #table", function()
+                  {
+                    $(".thay_doi").focus(), function() 
+                    {
+                      
+                      
+                    };
+                    
+                  });
+                },
+                error: function(xhr, statusText, error)
+                {
+                  alert(xhr.status);
+                }
+              })
+            }
+          },
+          error: function(xhr, statusText, error)
+          {
+            alert(xhr.status);
+          }
+        });
+      }
+    })
+  }
+
+  function plus_sl(cart_id, product_id, soluong_hientai)
+  {
+    // alert(cart_id + ',' + product_id + ',' + soluong_hientai);
+    //soluong_hientai là kiểu string nên không thể dùng phép + được => phải dùng + ở phía trước nó 
+    sl_tanglen = +soluong_hientai + 1;
+    // alert(sl_tanglen);
+    $.ajax({
+      url: 'classes/action.php',
+      type: 'POST',
+      data: {Product_Id: product_id},
+      success: function(data)
+      {
+       if(data >= sl_tanglen)
+       {
+        $.ajax({
+          url: 'classes/action.php',
+          type: 'POST',
+          data: {Cart_Id: cart_id, Sl_Tang: sl_tanglen},
+          success: function()
+          {
+            $( "#table" ).load( "http://localhost/gearmaytinh/cart.php" + " #table" );
+          },
+          error: function(jqXHR, textStatus, errorThrown)
+          {
+            alert(jqXHR.status);
+          }
+        });
+       }
+       else
+       {
+         $( "#popup1" ).hide().fadeIn(); 
+         timer = setTimeout(function () 
+         {
+          $( "#popup1" ).fadeOut();
+         },4000)
+        //  var row = $(".overlay").clone(true);
+        //  row.insertAfter('#container').hide().fadeIn();
+       }
+        
+      },
+      error: function(xhr, statusText, error)
+      {
+        alert(xhr.status);
+      }
+    });
+  }
+  
+ </script>

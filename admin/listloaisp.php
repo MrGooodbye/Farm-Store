@@ -60,7 +60,7 @@ include "inc/header.php";
                      <td><?php echo $result['catName']?></td>
                      <td><a href="sualoaisp.php?catId=<?php echo $result ['catId']?>">Sửa</a> || <a onclick = "return confirm('Bạn có chắc muốn xóa loại sản phẩm này không?')" href="?delId=<?php echo $result ['catId']?>">Xóa</a></td>
                      <style>.oddgradeX td{
-                        padding-right: 365px;
+                        padding-right: 200px;
                         padding-bottom: 7px;
                         padding-top: 10px;
                      }</style>

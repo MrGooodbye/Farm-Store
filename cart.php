@@ -59,13 +59,29 @@
             $product_Id = $result['productId'];
             $sl_hientai = $result['quantity'];
 ?>
-            <div class="layout-inline row">  
-            <img src="admin/uploads/<?php echo $result['image'] ?>" alt="kitten" />
-            <div class="col col-pro layout-inline">
+            <div class="layout-inline row">              
+            <img src="admin/uploads/xuatkho/<?php echo $result['image'] ?>" alt="kitten" />
+            <div class="col col-pro layout-inline">       
             <p><?php echo $result['productName']?></p>
             </div>
             <div class="col col-price col-numeric align-center ">
-            <p><?php echo $fm->format_currency($result['price'])?></p>
+<?php
+            if($result['sale'] == 0)
+            {
+              echo '<p style="margin-top: 10px;">'.$fm->format_currency($result['price']).'</p>';
+            }
+            else
+            {
+              echo '<del style="left: -31%; position: relative;">'.$fm->format_currency($result['price']).'</del>';
+              echo '<div class="rate_sale" style="padding-top: 3px; padding-bottom: 3px; position: relative; color: white; border-radius: 10px; 
+              border-style: solid; background-color: red; width: 19%; text-align: center; font-family: Times New Roman; left: 36%; top: -31%;
+              font-size: 14px;">-'.$result['sale'].'%</div>';
+              $giagoc = $result['price'];
+						  $giatriKM = $result['sale'];
+              $giaKM =  $giagoc - ($giagoc * $giatriKM / 100);		
+              echo '<p style="margin-top: -35px; ">'.$fm->format_currency($giaKM).'</p>';
+            }
+?>          
             </div>
             <div class="col col-qty layout-inline">
             <?php echo '<button class="qty qty-minus" id="minus" onclick="minus_sl('.$cartId.',\''.$sl_hientai.'\')">-</button>'; ?>
@@ -73,8 +89,13 @@
             <?php echo '<button class="qty qty-minus" id="plusus" onclick="plus_sl('.$cartId.','.$product_Id.',\''.$sl_hientai.'\')">+</button>'; ?>
             </div>
             <div class="col col-total col-numeric">               
-            <?php $total = $result['price'] * $result['quantity'];  ?>
-            <p><?php echo $fm->format_currency($total)?></p>
+<?php 
+            $giagoc = $result['price'];
+            $giatriKM = $result['sale'];
+            $quantity = $result['quantity'];
+            $total = $giagoc * $quantity - ($giagoc * $giatriKM / 100 * $quantity);
+            echo '<p>'.$fm->format_currency($total).'</p>';
+?>          
             </div>
             <a onclick="return confirm('Bạn có muốn xóa Sản Phẩm này không?');" href="?cartid= <?php echo $result['cartId'] ?>"><i class="fa-solid fa-trash fa-2x"></i></a>
             </div>
@@ -122,8 +143,8 @@
 
  <style>
     img {
-  width: 100px;
-  height: 80px;
+  width: 110px;
+  height: 105px;
   float: center;
 }
 
@@ -346,23 +367,23 @@ a.qty:hover {
 }
 
 #popup1{
-  margin: 405px auto;
-  margin-left: 800px;
+  margin: 10px auto;
+  margin-left: 950px;
   padding: 10px;
   background: #fff;
   border-radius: 5px;
-  width: 30%;
-  position: absolute;
+  width: 20%;
   border: none;
   border-radius: 15px;
   border-style: solid;
   float: right;
-  z-index: -999px;
-  font-size: 18px;
+  z-index: 80;
+  font-size: 16px;
   font-family: Tahoma, Arial, sans-serif;
   background-color: #06D85F;
   /* display: none; */
   /* opacity: 0.5; */
+  bottom: 0;
 }
 
  </style>
@@ -494,6 +515,7 @@ a.qty:hover {
        }
        else
        {
+         $("#popup1").css("position", "fixed");        
          $( "#popup1" ).hide().fadeIn(); 
          timer = setTimeout(function () 
          {

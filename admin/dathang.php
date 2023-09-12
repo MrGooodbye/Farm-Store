@@ -10,10 +10,11 @@
 <link rel="stylesheet" type="text/css" href="css/layout.css" />
 
 
-<style>.oddgradeX td{
+<style>td{
                         padding-right: 10px;
                        	padding-top: 15px;
                        	padding-bottom: 7px;
+						margin-right: 15px;
                      }
                    th {padding-right: 23px;}
 </style>
@@ -26,10 +27,10 @@ $fm = new Format();
 
 if (isset($_GET['idDatHangXacNhan']))
 {
-	$id = $_GET['idDatHangXacNhan'];
-	$id_cart_offline = $_GET['idDatHangXacNhan'];
-	$xacnhandon = $ct->confirm_cart($id);
-	$tienhanh_thongke = $thongke->luu_thongke_offline($id_cart_offline);
+	// $id = $_GET['idDatHangXacNhan'];
+	// $id_cart_offline = $_GET['idDatHangXacNhan'];
+	// $xacnhandon = $ct->confirm_cart($id);
+	
 }
 elseif(isset($_GET['idDatHangGiaoHang']))
 {
@@ -68,9 +69,9 @@ elseif(isset($_GET['idDatHangGiaoHang']))
 				$getallorder = $ct->getallorder();
 				if($getallorder) 
 				{
-					
 				while ($result = $getallorder->fetch_assoc()){
-				
+					$total_price_khongsale = $result['price'];
+					$total_price = $result['price'] - ($result['price'] * $result['sale'] / 100); //tổng giá
 				?>
 
 				<tr class="oddgradeX">
@@ -80,8 +81,21 @@ elseif(isset($_GET['idDatHangGiaoHang']))
 					<td><?php echo $result['diachi']?></td>
 					<td><?php echo $result['productName']?></td>
 					<td><?php echo $result['quantity']?></td>
-					<td><?php echo $fm->format_currency($result['price'])." "."VNĐ"?></td>
-					<td><img src ="uploads/<?php echo $result['image'] ?>" width="85"></td>
+					<td>
+<?php 					if($result['sale'] == 0)
+						{
+							echo $fm->format_currency($total_price);
+						}
+						else
+						{
+							echo '<del>'.$fm->format_currency($total_price_khongsale)."</del>";
+							echo '<B> -'.$result['sale'].'%</B>';
+							echo '<br>';
+							echo $fm->format_currency($total_price);
+						}
+?>
+					</td>
+					<td><img src ="uploads/xuatkho/<?php echo $result['image'] ?>" width="85"></td>
 					<td><?php echo $result['paid_date'] ?></td>
 					<!-- <td><a href="?idDatHang=<?php echo $result['orderId'] ?>">Xác Nhận Đơn</a></td>					 -->
 					<td>
@@ -121,6 +135,18 @@ elseif(isset($_GET['idDatHangGiaoHang']))
        </div>
     </div>
 </div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script> 
+<link href="https://cdn.datatables.net/v/dt/dt-1.13.4/datatables.min.css" rel="stylesheet"/>
+<script src="https://cdn.datatables.net/v/dt/dt-1.13.4/datatables.min.js"></script>
+
+<script>
+$(document).ready(function () 
+{
+  var table = $('#example').DataTable();
+})
+</script>
+
 
 <script type="text/javascript">
     $(document).ready(function () {

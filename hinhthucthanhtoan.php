@@ -14,11 +14,7 @@
 <h2><center>Chọn loại hình thức thanh toán</center></h2>
 <br>
 <center>
-<a href='thanhtoanvnpay.php#dathang' class='hero-btn2'>Thanh Toán VNPAY</a>
-<a href='thanhtoanvnpay.php#dathang' class='hero-btn2'>Thanh Toán MOMO</a>
-<a href='thanhtoanvnpay.php#dathang' class='hero-btn2'>Thanh Toán ZaloPay</a>
-<a href='thanhtoanvnpay.php#dathang' class='hero-btn2'>Thanh Toán VietComBank</a>
-<a href='thanhtoanvnpay.php#dathang' class='hero-btn2'>Thanh Toán AgriBank</a>
+<a href='thanhtoanmomo.php#dathang' class='hero-btn2'>Thanh Toán MOMO</a>
 <a href='payment.php#focus' class='hero-btn2'>Thanh Toán Tiền Mặt</a>
 </center>
 </div>

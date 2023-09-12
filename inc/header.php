@@ -50,18 +50,57 @@
                 <!--Gắn thẻ i class vào để đặt icon close vô thanh menu -->
                 <i class="fa fa-times" onclick="hideMenu()" id="menubbar"></i>               
                 <ul id="menuitem">
-                    
-                    <li><a href="index.php">TRANG CHỦ</a></li>
-                    <li><a href="gioithieu.php">GIỚI THIỆU</a></li>
-                    
+                <?php                     
+                    $cart_items = $ct->cart_items();
+                    if($cart_items)
+                    {
+                        while($row = $cart_items->fetch_assoc())
+                        {
+                            $cart_item = $row['total'];
+                        }
 
-                    
-                    <div class="subnavvv">
-                    <li class="fa fa-shopping-basket"><a href="cart.php#giohangf">GIỎ HÀNG</a></li>
-                    </div>
-                   
- 
-                    <?php 
+                        $limit = 10;
+                        // echo gettype($a);
+                        $convert_items = (int)$cart_item;
+                        // echo gettype($convert_items);
+                        // echo $convert_items;
+
+                        if($convert_items >= $limit)
+                        {
+?>
+                            <div class="subnavvv" id="items">
+                            <li class="fa fa-shopping-basket"><a href="cart.php#giohangf">GIỎ HÀNG<B> 9+</B></a>
+                            <div class="items_cartt" >             
+                            </div>
+                            </li>
+                            </div>
+<?php 
+                        }
+                        elseif(empty($cart_item))
+                        {
+?>                            
+                            <div class="subnavvv" id="items">
+                            <li class="fa fa-shopping-basket"><a href="cart.php#giohangf">GIỎ HÀNG<B> 0 </B></a>
+                            <div class="items_cartt" >             
+                            </div>
+                            </li>
+                            </div>
+<?php
+                        }
+                        else
+                        {
+?>                           
+                            <div class="subnavvv" id="items">
+                            <li class="fa fa-shopping-basket"><a href="cart.php#giohangf">GIỎ HÀNG<B> <?php echo $cart_item ?> </B></a>
+                            <div class="items_cartt">             
+                            </div>
+                            </li>
+                            </div>
+<?php                            
+                        }
+                    }
+?>                    
+<?php 
                         if(isset($_GET['customer_id']))
                         {
                             unset($_SESSION['customer_login']);
@@ -85,10 +124,10 @@
                         }  
                       
                     ?>
-
                     </div>
-
-
+                    
+                    <li><a href="index.php">TRANG CHỦ</a></li>
+                    <li><a href="gioithieu.php">GIỚI THIỆU</a></li>
                     <div class="subnavv">
                         <li><a href="sanpham.php#sanpham">SẢN PHẨM</a></li>
                     </div>
@@ -97,25 +136,16 @@
                         <li><a href=" lienhe.php#contact">LIÊN HỆ</a></li>
                         
                     </div>
-
-                   
-
-                    
                 </ul>
             </div>
             <!--Gắn thẻ i class vào để đặt icon menu vô thanh menu -->
             <i class="fa fa-bars" onclick="showMenu()"></i>
         </nav>  
+        <img id="bg" src="images/index.jpg">
         <div class="text-box">
         <a href="index.php"><img src="images/logo.png" id="avtimg"></a>
             <h1>Cửa Hàng Trang Thiết Bị PC ROSÉ</h1>
-            <p>
-                Kính chào khách hàng đã đến với Cửa Hàng Trang Thiết Bị PC ROSÉ. Tại đây chúng tôi luôn lắng nghe và phục vụ khách hàng 24/24 .
-                <br>Địa chỉ: 69A, khu phố 96, phường Hiệp Bình Chánh, Thành Phố Thủ Đức, Thành Phố Thành Phố Hồ Chí Minh. SĐT: 0969966996  
-            </p>
-            <a href="gioithieu.php"class="hero-btn">Biết thêm về chúng tôi</a>
-        </div> 
-            
+        </div>
     </div>
 
      
@@ -154,6 +184,29 @@ overflow: hidden;
     height: 120px; 
     float: left;
 }
+
+.items_cartt{
+    margin-left: 20px;
+}
+
+b, strong{
+    color: black;
+    border-radius: 5px;
+    background-color: white;
+    margin-left: 5px;
+    padding-left: 1.5px;
+    padding-right: 4px;
+    width: 100%;
+    font-size: 16px;
+}
+
+.header .fa{
+    margin-top: 1px;
+}
+
+.dl, ol, ul{
+    margin-right: -30px;
+}
         
 </style>
 
@@ -182,9 +235,69 @@ window.onscroll = function()
         navbar.classList.remove("sticky");
     }
 }
+</script>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+<script>
+setInterval(
+    function ()
+    {
+        $('#items').load(' #items', function(){
+            $("#items").css( { marginTop : "-2.5px" } );
+        });
+    }, 800); // refresh every 10000 milliseconds
 </script>
 
 
 
-    
+<!-- setTimeout(function(){
+   window.location.reload(1);
+}, 5000); -->
+
+<script>
+    (function(w, d) 
+    { 
+        w.CollectId = "6418670535dcebd4cb98f775"; 
+        var h = d.head || d.getElementsByTagName("head")[0]; 
+        var s = d.createElement("script"); 
+        s.setAttribute("type", "text/javascript"); 
+        s.async=true; 
+        s.setAttribute("src", "https://collectcdn.com/launcher.js"); 
+        h.appendChild(s); 
+    })
+    (window, document);
+</script>
+
+<script>
+    setInterval(autoDelete, 25000);
+
+    function autoDelete()
+    {
+        $.ajax({
+            url: 'classes/action.php',
+            type: 'POST',
+            data: { auto_delete: "" },
+            success: function(data)
+            {
+                // //console.log(data);
+                if(data >= 1)
+                {
+                    //location.href = "http://localhost/gearmaytinh/admin/produclist.php";
+                    //$("#example").load("http://localhost/gearmaytinh/admin/produclist.php" + " #example");
+                    //console.log("đã có cái để xóa");
+                    // var a = document.getElementById("test").innerText;
+                }
+                else
+                {
+                    // alert("không có gì để xóa");
+                    //console.log("khong co gi để xóa");
+                }
+            },
+            error: function(xhr, statusText, error)
+            {
+                alert(xhr.status);
+            }
+        });
+    }
+</script>
+</body>

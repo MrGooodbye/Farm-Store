@@ -36,12 +36,13 @@
     margin: 0 auto;
     border: none;
     border-radius: 15px;  
-    display: flex;
+    display: block;
     align-items: center;
     margin-bottom: 20px;
-    
+    text-align: center;
     cursor: pointer;  
-    width: 20%;  
+    width: 14.8%;  
+    text-align: center;
   }  
   .registerbtn:hover {  
     opacity: 1;  

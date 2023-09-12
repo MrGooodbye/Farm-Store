@@ -90,7 +90,6 @@
                         <div class="flex flex-1">
                         <!--Sidebar-->
                         <aside id="sidebar" class="bg-side-nav w-1/2 md:w-1/6 lg:w-1/6 border-r border-side-nav hidden md:block lg:block">
-
                             <ul class="list-reset flex flex-col">
                                 
                                 <li class="w-full h-full py-3 px-2">
@@ -108,26 +107,8 @@
                                             </a>
                                         </li>
                                         <li class="border-t mt-2 border-light-border w-full h-full px-2 py-3">
-                                            <a href="productadd.php" class="mx-4 font-sans font-hairline hover:font-normal text-sm text-nav-item no-underline" name = "themsp">
-                                                Thêm Sản Phẩm Ra Bán    
-                                            <span><i class="fa fa-angle-right float-right"></i></span>
-                                            </a>
-                                         </li>
-                                        <li class="border-t mt-2 border-light-border w-full h-full px-2 py-3">
                                             <a href="storage.php" class="mx-4 font-sans font-hairline hover:font-normal text-sm text-nav-item no-underline" name = "themsp">
-                                                Thêm Sản Phẩm Vào Kho      
-                                            <span><i class="fa fa-angle-right float-right"></i></span>
-                                            </a>
-                                        </li>
-                                        <li class="border-t border-light-border w-full h-full px-2 py-3">
-                                            <a href="listloaisp.php" class="mx-4 font-sans font-hairline hover:font-normal text-sm text-nav-item no-underline">
-                                                Danh Sách Loại Sản Phẩm
-                                            <span><i class="fa fa-angle-right float-right"></i></span>
-                                            </a>
-                                        </li>
-                                        <li class="border-t border-light-border w-full h-full px-2 py-3">
-                                            <a href="produclist.php" class="mx-4 font-sans font-hairline hover:font-normal text-sm text-nav-item no-underline">
-                                                Danh Sách Sản Phẩm Đang Bán
+                                                Nhập Sản Phẩm Vào Kho      
                                             <span><i class="fa fa-angle-right float-right"></i></span>
                                             </a>
                                         </li>
@@ -137,10 +118,13 @@
                                             <span><i class="fa fa-angle-right float-right"></i></span>
                                             </a>
                                         </li>
+                                        <li class="border-t border-light-border w-full h-full px-2 py-3">
+                                            <a href="thongke.php" class="mx-4 font-sans font-hairline hover:font-normal text-sm text-nav-item no-underline">
+                                                Thống Kê<span><i class="fa fa-angle-right float-right"></i></span></a>
+                                        </li>
                                     </ul>
                                 </li>
                             </ul>
-
                         </aside>
 <?php                        
                     }
@@ -177,7 +161,6 @@
 
 							?>
                           <li><a href="?action=dangxuat" class="no-underline px-4 py-2 block text-black hover:bg-grey-light">Logout</a></li>
-                         
                         </ul>
                     </div>
                 </div>
@@ -204,12 +187,6 @@
                                 <a href="addsp.php"
                                    class="mx-4 font-sans font-hairline hover:font-normal text-sm text-nav-item no-underline">
                                     Thêm Loại Sản Phẩm      
-                                    <span><i class="fa fa-angle-right float-right"></i></span>
-                                </a>
-                            </li>
-                            <li class="border-t mt-2 border-light-border w-full h-full px-2 py-3">
-                                <a href="productadd.php" class="mx-4 font-sans font-hairline hover:font-normal text-sm text-nav-item no-underline" name = "themsp">
-                                    Xuất Sản Phẩm Ra Kho    
                                     <span><i class="fa fa-angle-right float-right"></i></span>
                                 </a>
                             </li>
@@ -253,6 +230,28 @@
                                     Danh Sách Đặt Hàng Online
                                     <span><i class="fa fa-angle-right float-right"></i></span>
                                 </a>
+                            </li><li class="border-t border-light-border w-full h-full px-2 py-3">
+                                <a href="danggiao.php"
+                                   class="mx-4 font-sans font-hairline hover:font-normal text-sm text-nav-item no-underline">
+                                    Danh Sách Đơn Đang Giao
+                                    <span><i class="fa fa-angle-right float-right"></i></span>
+                                </a>
+                            </li>
+                            </li><li class="border-t border-light-border w-full h-full px-2 py-3">
+                                <a href="userlist.php"
+                                   class="mx-4 font-sans font-hairline hover:font-normal text-sm text-nav-item no-underline">
+                                    Danh Sách Người Dùng
+                                    <span><i class="fa fa-angle-right float-right"></i></span>
+                                </a>
+                            </li>
+                            </li><li class="border-t border-light-border w-full h-full px-2 py-3">
+                                <div class="mx-4 font-sans font-hairline hover:font-normal text-sm text-nav-item no-underline" id="sub_menu">
+                                    Thống Kê
+                                    <span><i class="fa fa-angle-right float-right"></i></span></div>
+                                    <ul style="position:relative;right:-85px;top:10px;font-weight:100;font-size:14px;display:none;" id="sub">
+                                        <li style="margin-bottom:10px"><a href="thongke_doanhthu.php" title="Arts">Doanh Thu</a></li>
+                                        <li><a href="thongke_sanpham.php" title="Arts">Sản Phẩm</a></li>
+                                    </ul>
                             </li>
                         </ul>
                     </li>
@@ -265,8 +264,45 @@
                     }
 ?>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 
-<script src="./main.js"></script>
+<script>
+    setInterval(autoDelete, 25000);
+
+    function autoDelete()
+    {
+        $.ajax({
+            url: '../classes/action.php',
+            type: 'POST',
+            data: { auto_delete: "" },
+            success: function(data)
+            {
+                // //console.log(data);
+                if(data >= 1)
+                {
+                    // location.href = "http://localhost/gearmaytinh/admin/produclist.php";
+                    //$("#example").load("http://localhost/gearmaytinh/admin/produclist.php" + " #example");
+                    //console.log("đã có cái để xóa");
+                    // var a = document.getElementById("test").innerText;
+                }
+                else
+                {
+                    // alert("không có gì để xóa");
+                    //console.log("khong co gi để xóa");
+                }
+            },
+            error: function(xhr, statusText, error)
+            {
+                alert(xhr.status);
+            }
+        });
+    }
+
+    $("#sub_menu").on('click', function(e){
+        //console.log('a');
+        document.getElementById("sub").style.display = "block";
+    })
+</script>
 </body>
 
 </html>

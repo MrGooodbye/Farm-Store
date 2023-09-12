@@ -5,7 +5,7 @@
 <?php
 
 if(!isset($_GET['proid']) || $_GET['proid']==NULL){
-        echo "<script>window.location = '404.php'</script>";
+        echo "<script>window.location = '404.php#main'</script>";
     }else{
     $id = $_GET['proid'];
     $id_sanpham = $_GET['proid'];
@@ -32,7 +32,8 @@ if(!isset($_GET['proid']) || $_GET['proid']==NULL){
     
     $get_product_details = $product->get_details($id);
     if($get_product_details){
-        while($result_details = $get_product_details->fetch_assoc()){
+        while($result_details = $get_product_details->fetch_assoc())
+        {
     
 ?>
 
@@ -44,16 +45,31 @@ if(!isset($_GET['proid']) || $_GET['proid']==NULL){
 <div class="small-container single-product"> 
     <div class="row1"> 
         <div class="col-2"> 
-            <img src="admin/uploads/<?php echo $result_details['image'] ?>" width="200%" id="ProductImg">
-
+            <img src="admin/uploads/xuatkho/<?php echo $result_details['image'] ?>" width="200%" id="ProductImg">            
         </div>
-
-
-
         <div class="col-2"> 
             <p> <a href="index.php">Trang Chủ</a> - Danh Mục <?php echo $result_details['catName'] ?> - <?php echo $result_details['productName'] ?></p>
             <h1><?php echo $result_details['productName'] ?></h1>
-            <h4><?php echo $fm->format_currency($result_details['price'])." "."VNĐ" ?></h4>
+<?php 
+             if($result_details['sale'] == 0)
+             {
+                echo '<h4>Giá: '.$fm->format_currency($result_details['price']).' VNĐ</h4>';
+                //echo '<B style="color:MediumVioletRed;">Giá: '.$fm->format_currency($result['price']).' VND</B>';
+             }
+             else
+             {
+                echo '<B style="font-size:19px;"><del style="color:OrangeRed;">'.$fm->format_currency($result_details['price']).' VNĐ</del></B>';
+                echo '<div class="rate_sale" style="position: relative; color: white; border-radius: 10px; border-style: solid; left: -30%;
+                background-color: Salmon; width: 20%; text-align: center; font-family: Times New Roman; font-size: 17px; float: right;"> -'.$result_details['sale'].'%</div>';
+                echo '<br>';
+                $giagoc = $result_details['price'];
+                $giatriKM = $result_details['sale'];
+                $giaKM =  $giagoc - ($giagoc * $giatriKM / 100);		
+                echo '<B style="color:DeepPink;font-size:21.5px;">'.$fm->format_currency($giaKM).' VNĐ</B>';
+                echo '<p style="font-weight: bold;">Chương trình khuyến mãi sẽ kết thúc vào ngày '.$result_details['sale_duration'].'</p>';
+             }
+?>
+            
             <h4>Loại Sản Phẩm: <?php echo $result_details['catName'] ?> </h4>
             <h4>Tình Trạng: 
                 <?php 
@@ -65,11 +81,11 @@ if(!isset($_GET['proid']) || $_GET['proid']==NULL){
             <div class="add-cart">
                     <form action="" method="post" id="muaban">
                         <input type="number" class="buyfield" name="quantity" value="1" min="1" id="soluong"/>
-                        <input type="submit" class="buysubmit" name="submit" value="Thêm vào giỏ"/>
+                        <input type="submit" class="buysubmit" name="submit" id="button"value="Thêm vào giỏ"/>
         </br>
         </br>
 
-                        <input type="submit" class="buysubmit" name="submitt" value="Mua Ngay"/>
+                        <input type="submit" class="buysubmit" name="submitt"  value="Mua Ngay"/>
                     </form>
                      <?php 
                             if(isset($AddtoCart)){
@@ -122,6 +138,7 @@ if(!isset($_GET['proid']) || $_GET['proid']==NULL){
                     check = data.Quantity;
                     if(check == 0)
                     {
+                        $(':input[type="number"]').prop('disabled', true);
                         $(".buyfield").css("cursor", "not-allowed");
                         $(".buysubmit").css("cursor", "not-allowed");
                         $(':input[type="submit"]').prop('disabled', true);
@@ -138,6 +155,8 @@ if(!isset($_GET['proid']) || $_GET['proid']==NULL){
                                 $(".buysubmit").css("cursor", "not-allowed");
                                 $(':input[type="submit"]').prop('disabled', true);
                             }
+                            /*sl hiện tại trong input number lớn hơn check => disable tất cả các field và khi giảm sl trong input type number 
+                            = hoặc nhỏ hơn check thì các field sẽ enable lại */
                             else
                             {
                                 $(".buyfield").css("cursor", "auto");

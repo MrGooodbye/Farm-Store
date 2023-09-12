@@ -99,20 +99,54 @@
         {
 ?>
             <div class="col-4">
-                <a href="chitietsp.php?proid=<?php echo $result['productId'] ?>#chitietsanpham"><img src="admin/uploads/<?php echo $result['image'] ?> " id="popcornmakers"></a>
-                <h4><?php echo $result['productName'] ?></h4>
-                <div class="rating">
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <p>Giá: <?php echo $result['price'] ?> VNĐ</p>
+<?php 
+                if($result['sale'] == 0)
+                {
+
+                }
+                else
+                {
+                    echo '<div class="rate_sale" style="padding-top: 5px; padding-bottom: 5px; position: static; color: white; border-radius: 10px; 
+                    border-style: solid; background-color: red; width: 13%; text-align: center; font-family: Times New Roman; 
+                    font-size: 17.5px; margin-bottom: 8px;"> -'.$result['sale'].'%</div>';
+                }
+?>                
+                <a href="chitietsp.php?proid=<?php echo $result['productId'] ?>#chitietsanpham"><img src="admin/uploads/xuatkho/<?php echo $result['image']  ?>" id="popcornmakers"></a>
+                <h4><?php echo $result['productName']?></h4>
+                    
+                    <?php 
+                                        if($result['sale'] == 0)
+                                        {
+                                            echo '<br>';
+                                            echo '<B style="color:MediumVioletRed;">Giá: '.$fm->format_currency($result['price']).' VND</B>';	
+                                        }
+                                        else
+                                        {
+                                            echo '<br>';
+                                            $giagoc = $result['price'];
+                                            $giatriKM = $result['sale'];
+                                            $giaKM =  $giagoc - ($giagoc * $giatriKM / 100);						
+                                            echo '<del>Giá gốc: '.$fm->format_currency($result['price']).' VND</del>';	
+                                            
+                                           
+                    
+                                            echo '<br>';
+                                            echo '<B style="color:DeepPink;">Giá khuyến mãi: '.$fm->format_currency($giaKM).' VND</B>';		
+                                        }
+                    ?>
+                                        
+                                        <p>Tình trạng: 
+                                        <?php 
+                                            if($result['solg_from_storage'] <= 0)
+                                            {echo "<font color=\"red\">Hết Hàng</font>";}
+                                            else{echo "<font color=\"blue\">Còn Hàng</font>";}
+                                        ?>
+                                        </p>
             </div> 
-    </div>
 <?php 
         }
     }
+
     else
     {
         echo "Danh mục bạn chọn hiện tại không có Sản Phẩm nào. Vui lòng quay lại sau!";
@@ -227,17 +261,49 @@
         {
 ?>
             <div class="col-4">
-                <a href="chitietsp.php?proid=<?php echo $result['productId'] ?>#chitietsanpham"><img src="admin/uploads/<?php echo $result['image'] ?> " id="popcornmakers"></a>
+<?php 
+                if($result['sale'] == 0)
+                {
+
+                }
+                else
+                {
+                    echo '<div class="rate_sale" style="padding-top: 5px; padding-bottom: 5px; position: static; color: white; border-radius: 10px; 
+                    border-style: solid; background-color: red; width: 13%; text-align: center; font-family: Times New Roman; 
+                    font-size: 17.5px; margin-bottom: 8px;"> -'.$result['sale'].'%</div>';
+                }
+?>
+                <a href="chitietsp.php?proid=<?php echo $result['productId'] ?>#chitietsanpham"><img src="admin/uploads/xuatkho/<?php echo $result['image']  ?>" id="popcornmakers"></a>
                 <h4><?php echo $result['productName'] ?></h4>
-                <div class="rating">
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star-o"></i>
-                <p>Giá: <?php echo $result['price'] ?> VNĐ</p>
+                <?php 
+                                        if($result['sale'] == 0)
+                                        {
+                                            echo '<br>';
+                                            echo '<B style="color:MediumVioletRed;">Giá: '.$fm->format_currency($result['price']).' VND</B>';	
+                                        }
+                                        else
+                                        {
+                                            echo '<br>';
+                                            $giagoc = $result['price'];
+                                            $giatriKM = $result['sale'];
+                                            $giaKM =  $giagoc - ($giagoc * $giatriKM / 100);						
+                                            echo '<del>Giá gốc: '.$fm->format_currency($result['price']).' VND</del>';	
+                                            
+                                           
+                    
+                                            echo '<br>';
+                                            echo '<B style="color:DeepPink;">Giá khuyến mãi: '.$fm->format_currency($giaKM).' VND</B>';		
+                                        }
+                    ?>
+                                        
+                                        <p>Tình trạng: 
+                                        <?php 
+                                            if($result['solg_from_storage'] <= 0)
+                                            {echo "<font color=\"red\">Hết Hàng</font>";}
+                                            else{echo "<font color=\"blue\">Còn Hàng</font>";}
+                                        ?>
+                                        </p>
             </div> 
-    </div>
 <?php 
         }
     }

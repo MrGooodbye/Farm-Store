@@ -6,6 +6,10 @@
   {
       header('Location:dangnhap.php');
   } 
+  else
+  {
+    $id_doipass = $_SESSION['customer_id'];
+  }
 ?>
 
 <?php    
@@ -64,7 +68,7 @@ if(isset($updatepw))
   }  
 
   .containerr {  
-      padding right: 20px;  
+      padding-right: 20px;  
   } 
   
   select{
@@ -167,6 +171,7 @@ if(isset($updatepw))
 
 </style>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 <script>
 const togglePassword = document.querySelector('#togglePassword');
   const password = document.querySelector('#id_password');
@@ -179,4 +184,6 @@ const togglePassword = document.querySelector('#togglePassword');
     // toggle the eye slash icon
     this.classList.toggle('fa-eye-slash');
   });
+
+
 </script>

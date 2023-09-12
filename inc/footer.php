@@ -25,10 +25,11 @@
             </div>
         </div>
         <hr>
-        <p class="copyright">Cửa Hàng Trang Thiết Bị PC ROSÉ</p>
+        <p class="copyright" style="margin-bottom: 0px;">Cửa Hàng Trang Thiết Bị PC ROSÉ</p>
     </div>
 </div>
 </div>
+
 
 <!--JAVASCRIPTS FOR TOGGLE MENU(có thể hiểu là tạo hiệu ứng menu cho web mobile)-->
 <script>

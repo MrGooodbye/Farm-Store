@@ -162,8 +162,7 @@
                         <label>Số Lượng Đang Bán</label>
                     </td>
                     <td>
-                    <input type="text" value = "<?php echo $result_product['solg_from_storage'] ?>"name="quantity" class="medium" />
-                        <div id="messagequantity"></div>
+                    <input type="text" readonly value = "<?php echo $result_product['solg_from_storage'] ?>"name="quantity" class="medium" />
                     </td>
                 </tr>
                 <tr>
@@ -171,7 +170,7 @@
                         <label>Ảnh Sản Phẩm</label>
                     </td>
                     <td>
-                        <img src ="uploads/<?php echo $result_product['image'] ?>" width="220">
+                        <img src ="uploads/xuatkho/<?php echo $result_product['image'] ?>" width="220">
                         <input type="file" name="image" placeholder="Chưa có ảnh được chọn" class="medium"/>
                     </td>
                 </tr>

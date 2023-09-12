@@ -64,7 +64,7 @@
   margin-top: 215px;
   background-color: #fff;
   position: fixed;
-  /* z-index: 10000; */
+  z-index: 10000;
   margin-left: 37px;
   top: 0;
   left: 0;
@@ -89,10 +89,6 @@
   text-align: center;
   background-color: #0000;
   color: black;
-}
-
-#details td{
-
 }
 
 #details td{
@@ -144,7 +140,7 @@
           <td><?php echo $result_show['productName']?></td>
           <td><?php echo $result_show['quantity']?></td>
           <td><?php echo $fm->format_currency($result_show['price'])." VNĐ"?></td>
-          <td><img src ="admin/uploads/<?php echo $result_show['image'] ?>" width="80"></td>
+          <td><img src ="admin/uploads/xuatkho/<?php echo $result_show['image'] ?>" width="80"></td>
           <td><?php echo $result_show['paid_date']?></td>
           <td><?php echo $result_show['paid_type']?></td>
           <td>
@@ -176,11 +172,9 @@
       }
     }
   elseif(isset($_GET['id_sanpham']))
-  {
-    $doi_tra_id_sanpham = $_GET['id_sanpham'];
-    $doitra = $cs->doitra_sanpham($doi_tra_id_sanpham);
-    
-  }
+    {
+      $doi_tra_id_sanpham = $_GET['id_sanpham'];
+    }
   }
 ?>
 </table>
@@ -223,13 +217,17 @@
 
 <center><B><U>ĐƠN HÀNG CỦA BẠN</U></B></center>
 
+<br>
+<br>
 <table id="customers">
+    <thead>
     <br>
 <?php 
    $show_order = $cs->show_order($id);
    if($show_order)
    {
 ?>
+   
     <tr>
       <th><B>Tên Sản Phẩm</B></th>
       <th><B>Số Lượng</B></th>
@@ -238,46 +236,64 @@
       <th><B>Thời Gian Mua</B></th>
       <th><B>Loại Thanh Toán</B></th>
       <th><B>Trạng Thái</B></th>
-      <th><B>Yêu Cầu</B></th>
+      <th><B>Chi Tiết</B></th>
     </tr>
-  
+    <thead>
+    
+    <tbody>
 <?php
     while ($result = $show_order->fetch_assoc())
     {
+      $total_price_khongsale = $result['price'];
+			$total_price = $result['price'] - ($result['price'] * $result['sale'] / 100); //tổng giá
 ?>
+      
       <tr>
         <td><?php echo $result['productName']?></td>
         <td><?php echo $result['quantity']?></td>
-        <td><?php echo $fm->format_currency($result['price'])." VNĐ"?></td>
-        <td><img src ="admin/uploads/<?php echo $result['image'] ?>" width="80"></td>
+        <td>
+<?php 					if($result['sale'] == 0)
+						{
+							echo $fm->format_currency($total_price);
+						}
+						else
+						{
+							echo '<del>'.$fm->format_currency($total_price_khongsale)."</del>";
+							echo "<font color=\"blue\"> -".$result['sale']."%</font>";
+							echo '<br>';
+							echo "<B><font color=\"deeppink\">".$fm->format_currency($total_price)."</font></B>";
+						}
+?>
+					</td>
+        <td><img src ="admin/uploads/xuatkho/<?php echo $result['image'] ?>" width="80"></td>
         <td><?php echo $result['paid_date'] ?></td>
         <td><?php echo $result['paid_type']?></td>
         <td>
         <?php 
                 if($result['status']==0)
                 {
-                ?>
-                <B>Đang chờ xử lý...</B>
-                <?php
+                  echo '<B>Đang chờ xử lý</B>';
                 }
-                elseif($result['status']==1){
-                ?>
-                <B>Đã được xử lý</B>
-                <?php
+                elseif($result['status']==1)
+                {
+                  echo '<B>Đã được xử lý</B>';  
+                }
+                elseif($result['status']==3)
+                {
+                  echo '<B>Đã nhận hàng</B>';
+                }
+                elseif($result['status']==4)
+                {
+                  echo '<B>Đã hủy</B>';
                 }
                 else
                 {
-                ?>
-                <B>Giao hàng</B>
-                <?php
+                  echo '<B>Đang giao hàng</B>';
                 }
         ?>
         </td>
         <td>
-          <a href="donhangcuaban.php?yeucaudoitra&id_sanpham=<?php echo $result['orderId'] ?>">Đổi/Trả</a>
-        </td>
-        <td>
-          <a href="donhangcuaban.php?madon=<?php echo $result['orderId']?>&loaipaid=<?php echo $result['paid_type']?>#main" >Xem chi tiết</a>
+        <a href="donhangcuaban.php?madon=<?php echo $result['orderId']?>&loaipaid=<?php echo $result['paid_type']?>#main" >Xem chi tiết</a>
         </td>
       </tr>
 <?php
@@ -288,12 +304,24 @@
     echo '<span class="error"><center><br>Hiện tại quý khách chưa có đơn hàng nào được mua tại cửa hàng chúng tôi.</center></span><br>';
   }
 ?>
+ </tbody>
 </table>
 </div>
-
+<hr>
+<br>
 
 <?php include 'inc/footer.php'; ?>
 
 
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script> 
+<link href="https://cdn.datatables.net/v/dt/dt-1.13.4/datatables.min.css" rel="stylesheet"/>
+<script src="https://cdn.datatables.net/v/dt/dt-1.13.4/datatables.min.js"></script>
+
+<script>
+$(document).ready(function () 
+{
+  var table = $('#customers').DataTable();
+})
+</script>
 

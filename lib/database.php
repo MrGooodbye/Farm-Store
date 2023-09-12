@@ -62,6 +62,12 @@ public function insert($query){
     return false;
     }
  }
+
+ public function update_sale($query){
+  $con=mysqli_connect("localhost","root","","nongsan");
+  $result = mysqli_query($con, $query) or die($this->link->error.__LINE__);
+  echo '' .mysqli_affected_rows($con);
+}
   
 // Delete data
  public function delete($query){

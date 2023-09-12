@@ -140,6 +140,7 @@
 				if($result_check != false)
 				{
 					$value = $result_check->fetch_assoc();
+					echo $userpass;
 					Session::set('customer_login',true);
 					Session::set('customer_id',$value['regisId']);
 					echo '<script>alert("Bạn đã đăng nhập thành công!")</script>';
@@ -148,6 +149,7 @@
 				//TH1: Nhập sai tài khoản hoặc mật khẩu -> Tài Khoản hoặc Mật Khẩu không chính xác
 				else
 				{
+					echo $userpass;
 					echo '<script>alert("Sai thông tin tài khoản hoặc mật khẩu!")</script>';
 				}
 			}
@@ -174,6 +176,9 @@
 			$string = strlen($sdt);
 			$address = strlen($diachi);
 			$cccd = strlen($cmnd);
+
+			$sdt_md5 = md5($sdt);
+			$cmnd_md5 = md5($cmnd);
 
 			$permited  = array('jpg', 'jpeg', 'png');
 			$file_name = $_FILES['image']['name'];
@@ -210,10 +215,10 @@
 					move_uploaded_file($file_temp, $uploaded_image);
 					$query = "UPDATE tbl_regis SET 
 					username = '$username', 
-					sdt= '$sdt', 
+					sdt= '$sdt_md5', 
 					email = '$email', 
 					diachi = '$diachi', 
-					cmnd = '$cmnd', 
+					cmnd = '$cmnd_md5', 
 					gioitinh = '$gioitinh', 
 					ngaysinh = '$dob', 
 					image = '$unique_image' 
@@ -229,7 +234,7 @@
 					sdt= '$sdt', 
 					email = '$email', 
 					diachi = '$diachi', 
-					cmnd = '$cmnd', 
+					cmnd = '$cmnd_md5', 
 					gioitinh = '$gioitinh', 
 					ngaysinh = '$dob'
 
@@ -248,6 +253,19 @@
 			else
 			{
 				echo '<script>alert("Bạn đã cập nhật thông tin thất bại!")</script>';
+			}
+		}
+
+		public function verify_otp_mobile($id_acc_changepass)
+		{
+			$query_select_mobilephone = "SELECT tbl_regis.sdt FROM tbl_regis WHERE regisId = $id_acc_changepass";
+			$result_select = $this->db->select($query_select_mobilephone);
+			if($result_select)
+			{
+				while($row = mysqli_fetch_assoc($result_select))
+				{
+					$sdt = $row['sdt'];
+				}
 			}
 		}
 
@@ -284,11 +302,11 @@
 		{
 			$query = "
 			SELECT tbl_order.orderId, tbl_order.productName, tbl_order.price, tbl_order.quantity, tbl_order.image, tbl_order.paid_date, 
-			tbl_order.paid_type, tbl_order.status
+			tbl_order.paid_type, tbl_order.status, tbl_order.sale
 			FROM tbl_order WHERE regisId = '$id'
 			UNION
 			SELECT tbl_cartonline.cart_online_Id, tbl_cartonline.productName, tbl_cartonline.price, tbl_cartonline.quantity, tbl_cartonline.image, 
-			tbl_cartonline.paid_date, tbl_cartonline.paid_type, tbl_cartonline.status
+			tbl_cartonline.paid_date, tbl_cartonline.paid_type, tbl_cartonline.status, tbl_cartonline.sale
 			FROM tbl_cartonline WHERE regisId = '$id'
 			ORDER BY paid_date";
 			$result = $this->db->select($query);
@@ -309,9 +327,18 @@
 			return $result;
 		}
 
-		public function doitra_sanpham($doi_tra_id_sanpham)
+		public function show_all_customer()
 		{
-			$query_select = "SELECT FROM ";
+			$query_select = "SELECT * FROM tbl_regis";
+			$result_select = $this->db->select($query_select);
+			return $result_select;
+		}
+
+		public function show_user_details($user_id)
+		{
+			$query = "SELECT * FROM tbl_regis WHERE regisId = '$user_id'";
+			$result_query = $this->db->select($query);
+			return $result_query;
 		}
 	}
 ?>

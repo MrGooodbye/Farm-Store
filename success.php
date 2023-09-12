@@ -6,11 +6,12 @@
         sleep(2);
         unset($_SESSION['code_cart']);
         // echo $_SESSION['code_cart'];
+        // echo $_SESSION['code_cart'];
     }
 
     elseif(!isset($_SESSION['code_cart']))
     {
-        // echo '<script>window.location = "404.php"</script>';
+        echo '<script>window.location = "404.php#main"</script>';
         // echo 'khong co';
     }
 ?>
@@ -28,3 +29,10 @@
 
 
 <?php include 'inc/footer.php'; ?>
+
+<style>
+    h1{
+        top: 35%;
+        position: relative;
+    }
+</style>

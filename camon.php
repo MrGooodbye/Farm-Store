@@ -15,31 +15,20 @@
 <?php 
     if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit']))
     {
-        if(isset($_POST['codecart']))
+        if(isset($_SESSION['code_cart']))
         {
             $hoten = $_POST['hoten'];
             $sdt = $_POST['sdt'];
             $diachi = $_POST['diachi'];
-
-            $amount = $_POST['amount']; 
-            $bankcode = $_POST['bankcode']; 
-            $banktranno = $_POST['banktranno']; 
-            $cardtype = $_POST['cardtype']; 
-            $orderinfo = $_POST['orderinfo']; 
-            $paydate = $_POST['paydate']; 
-            //thiếu responecode 
-            $tmncode = $_POST['tmncode']; 
-            $transacno = $_POST['transacno']; 
-            $transactionstatus = $_POST['transactionstatus']; 
-            $txnref = $_POST['codecart']; 
-
-            $insert_cart_online = $ctonline -> insert_cart_online_details($hoten, $sdt, $diachi, $customer_id);
+            $paid_type = $_POST['paid_type'];
+            $insert_cart_online = $ctonline -> insert_cart_online_details($hoten, $sdt, $diachi, $paid_type, $customer_id);
         }
     }
 ?>
 
 <body>
 <?php 
+    //VNPAY
     if(isset($_GET['vnp_BankTranNo']))
     {
         $amount = $_GET['vnp_Amount']; 
@@ -67,20 +56,8 @@
                 <label>Số Điện Thoại</label>
                 <input type="text" name="sdt"></input>
                 <label>Địa Chỉ Giao</label>
-                <input type="text" name="diachi"></input>
-
-                <input type="hidden" name="amount" value="<?php echo $amount?>"></input> 
-                <input type="hidden" name="bankcode" value="<?php echo $bankcode?>"></input> 
-                <input type="hidden" name="banktranno" value="<?php echo $banktranno?>"></input> 
-                <input type="hidden" name="cardtype" value="<?php echo $cardtype?>"></input> 
-                <input type="hidden" name="orderinfo" value="<?php echo $orderinfo?>"></input> 
-                <input type="hidden" name="paydate" value="<?php echo $paydate?>"></input> 
-                <input type="hidden" name="tmncode" value="<?php echo $tmncode?>"></input> 
-                <input type="hidden" name="transacno" value="<?php echo $transacno?>"></input> 
-                <input type="hidden" name="transactionstatus" value="<?php echo $transactionstatus?>"></input> 
-                <input type="hidden" name="codecart" value="<?php echo $txnref?>"></input> 
-        
-
+                <input type="text" name="diachi"></input>        
+                <input type="hidden" name="paid_type" value="VNPAY"></input> 
                 <input type="submit" name="submit" class="btn" value="Đặt Hàng"></input>
             </form>
             <br>
@@ -91,11 +68,39 @@
         {
             echo '1';
         }
-
     }
+
+    //MOMO
+    elseif(isset($_GET['orderInfo']))
+    {
+        $message = $_GET['orderInfo'];
+        $status = $_GET['message'];
+        if($status == 'Successful.')
+        {
+            ?>
+            <br>
+            <center><h2>Thanh Toán Thành Công! Vui lòng để lại thông tin liên hệ</h2></center>
+            <hr>
+            <div class="small-container">
+            <form action="" method="post">
+                <label>Họ và Tên</label>
+                <input type="text" name="hoten" autofocus></input>
+                <label>Số Điện Thoại</label>
+                <input type="text" name="sdt"></input>
+                <label>Địa Chỉ Giao</label>
+                <input type="text" name="diachi"></input>        
+                <input type="hidden" name="paid_type" value="MOMO"></input> 
+                <input type="submit" name="submit" class="btn" value="Đặt Hàng"></input>
+            </form>
+            <br>
+            </div>
+<?php   
+        }
+    }
+
     else
     {
-        $del_all_data_cart = $ct->del_all_data_cart();
+        
 ?>
         <div class="small-container" >
         <br>
@@ -118,11 +123,6 @@
     .small-container{
         /*căn giữa*/
         width: 430px;
-    }
-
-    .small-container form{
-        /* flex-wrap: wrap; */
-        /* justify-self: center; */
     }
 
 

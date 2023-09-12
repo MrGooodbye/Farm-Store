@@ -44,7 +44,14 @@
 					Session::set('adminUser', $value['adminUser']);
 					Session::set('adminName', $value['adminName']);
 					Session::set('adminLevel', $value['level']);
-					header('Location:index.php');
+					if(Session::get('adminLevel') == 1)
+					{
+						header('Location:thukhoindex.php');
+					}
+					else
+					{
+						header('Location:index.php');
+					}
 
 				}else{
 					$alert = '<span class= "error"><center>Tài Khoản hoặc Mật Khẩu không đúng. Mời bạn nhập lại.</center></span>';

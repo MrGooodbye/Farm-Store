@@ -65,7 +65,7 @@
   <tr>
   <td><?php echo $result['username'] ?></td>
   <td><?php echo $result['useracc'] ?></td>
-  <td><?php echo $maskedPassword ?>                 <B><a href="doimatkhau.php">Đổi mật khẩu</a></B></td> 
+  <td><?php echo $maskedPassword ?><B><a href="confirmotp.php">Đổi mật khẩu</a></B></td> 
   </tr>
   <tr> 
   <th><B>Số Điện Thoại</B></th>
@@ -73,7 +73,7 @@
   <th><B>Địa Chỉ</B></th>
 </tr>
 <tr>
-<td><?php echo $result['sdt'] ?></td>
+<td>***********</td>
 <td><?php echo $result['email'] ?></td>
 <td><?php echo $result['diachi'] ?></td>
   </tr>
@@ -82,7 +82,7 @@
   <th><B>Giới Tính</B></th>
   <th><B>Ngày Sinh</B></th>
 </tr>
-<td><?php echo $result['cmnd'] ?></td>
+<td>************</td>
 <td>
   <?php 
     if($result['gioitinh'] == 1) 
